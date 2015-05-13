@@ -18,6 +18,9 @@ Thumbs.db
 *.pyo
 node_modules/
 spm_modules/
+sea-modules/
+dist/
+_dist/
 bower_components/
 _site
 .cache/
