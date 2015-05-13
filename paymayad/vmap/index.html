@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>My Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/vmap/assets/css/bootstrap.min.css">
+    <link href="/vmap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/vmap/assets/css/index.css" type="text/css">
+    <script src="/vmap/assets/sea-modules/seajs/1.2.1/sea-debug.js"></script>
+    <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
+</head>
+<body>
+<header>
+    <a href="#" id="logo"><img src="http://cdn3.iconfinder.com/data/icons/ciceronian/Icons/Maps.png" /> </a>
+
+    <form action="" id="J_search" class="form-search">
+        <input type="text" class="input-xxlarge search-query" placeholder="input something" id="keywords"/>
+        <button type="submit" class="btn btn-primary">搜索</button>
+    </form>
+</header>
+<div id="map" class="container-fluid"></div>
+
+<div class="panel" id="J_Panel" style="visibility: hidden;">
+    <div class="panel-inner">
+        Panel Content
+    </div>
+    <a class="close" href="#!showPanel">&raquo;</a>
+</div>
+<script>
+    seajs.config({
+        base: "/vmap/assets/",
+        alias:{
+            "$":"sea-modules/jquery/1.7.2/jquery",
+            "openlayers":"openlayers/src/mylayers",
+            "map":"map/src/map"
+        }
+    });
+    seajs.use(["$", "map"],function($, map) {
+        // 页面逻辑
+        map.init();
+    });
+</script>
+</body>
+</html>

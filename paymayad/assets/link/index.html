@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Link</title>
+    <link media="all" href="http://assets.paymapad.com/css/alice_1.0.0.css" rel="stylesheet">
+    <style>
+        #wrap {
+            margin: 50px auto;
+            width: 50%;
+            min-width: 600px;
+        }
+
+        .box {
+            border: 4px dotted #d8e3ff;
+            margin: 40px 0;
+            padding: 20px;
+        }
+
+        #main .step-panel {
+            position: relative;
+            /*height: 440px;*/
+        }
+
+        #main .step-panel .ui-form-item {
+            /*height: 36px;*/
+        }
+
+        #main .step-panel #map {
+            width: 100%;
+            height: 360px;
+        }
+
+        #main .step-panel .actions {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        a.ui-step-text, a.ui-step-text:hover {
+            color: #999;
+            text-decoration: none;
+        }
+
+        .ui-step-blue .ui-step-active .ui-step-number {
+            color: white;
+        }
+
+        .ui-step-blue .ui-step-active .ui-step-text, .ui-step-blue .ui-step-active .ui-step-text:hover {
+            color: #3b7cb8;
+        }
+
+        .ui-form-required {
+            color: #F00;
+            font-family: SimSun;
+            font-size: 14px;
+            margin-right: 6px;
+        }
+
+        .generate_code textarea {
+            width: 100%;
+            background: #FCF9F9;
+            border: 1px solid #cdcdcd;
+            font-size: 14px;
+            font-family: helvetica;
+            color: #666;
+        }
+
+        .generate_code textarea.focus {
+            background: white;
+        }
+
+        #signup_btn {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        #signup, #login {
+            background: #f1f8ff;
+        }
+
+        #login_btn {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <ol class="ui-step ui-step-blue ui-step-3" id="step" style="display: none;">
+        <li class="ui-step-start">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="ui-step-number">1</i>
+                <a href="#!/first" class="ui-step-text">第一步</a>
+            </div>
+        </li>
+        <li class="">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="ui-step-number">2</i>
+                <a href="#!/second" class="ui-step-text">第二步</a>
+            </div>
+        </li>
+        <li class="ui-step-end">
+            <div class="ui-step-line">-</div>
+            <div class="ui-step-icon">
+                <i class="iconfont">y</i>
+                <i class="iconfont ui-step-number">r</i>
+                <a href="#!/third" class="ui-step-text">第三步</a>
+            </div>
+        </li>
+    </ol>
+    <div id="main" style="display: none;" class="box">
+        <div class="step-panel step-panel-1" style="display: none;">
+            <div class="ui-form-item">
+                <label for="complete_title" class="ui-label">
+                    <span class="ui-form-required">*</span>
+                    公司地址:
+                </label>
+                <input class="ui-input" type="text" id="complete_title" value=""/>
+            </div>
+            <div class="ui-form-item" id="link_type" data-selected="1">
+                <label class="ui-label">选择显示类型: </label>
+                <button type="button" class="J_choose_type ui-button ui-button-lwhite" data-show="upload_icon"
+                        data-id="1">LOGO
+                </button>
+                <button type="button" class="J_choose_type ui-button ui-button-lwhite" data-show="short_name"
+                        data-id="2">TEXT
+                </button>
+            </div>
+            <div class="ui-form-item slide_short_name slide_panel" style="display: none;">
+                <label for="short_name" class="ui-label">显示标题: </label>
+                <input class="ui-input" type="text" id="short_name" value="未定义标题"/>
+            </div>
+            <div class="ui-form-item slide_upload_icon slide_panel">
+                <label class="ui-label">上传图标: </label>
+                <button type="button" class="ui-button ui-button-lwhite" id="upload_icon">添加图片</button>
+            </div>
+            <div class="ui-form-item slide_upload_icon slide_panel">
+                <label class="ui-label">图标URL: </label>
+                <input class="ui-input" type="text" id="preview_img_src"
+                       value="http://pic.paymapad.com/img/default.png"/>
+            </div>
+            <div class="ui-form-item slide_upload_icon slide_panel">
+                <label class="ui-label">预览图标: </label>
+                <img src="http://pic.paymapad.com/img/default.png" style="height: 64px;" id="preview_img"/>
+            </div>
+            <div class="ui-form-item">
+                <a href="#!/second" type="button" class="ui-button ui-button-lwhite">下一步</a>
+            </div>
+
+            <a href="#!/login" id="login_btn" class="ui-button ui-button-lorange">登陆</a>
+        </div>
+
+        <div class="step-panel step-panel-2" style="display: none;">
+            <div id="map">
+
+            </div>
+            <div class="actions">
+                <a href="#!/first" class="ui-button ui-button-lwhite">上一步</a>
+                <a href="#" class="ui-button ui-button-lorange" id="save">下一步</a>
+            </div>
+        </div>
+
+        <div class="step-panel step-panel-3" style="display: none;">
+            <form class="ui-form" action="">
+                <div class="ui-form-item">
+                    <label for="container_width" class="ui-label">宽度: </label>
+                    <input class="ui-input" type="text" id="container_width" value="360"/>
+
+                    <p class="ui-form-explain">(以px为单位)</p>
+                </div>
+                <div class="ui-form-item">
+                    <label for="container_height" class="ui-label">高度: </label>
+                    <input class="ui-input" type="text" id="container_height" value="200"/>
+
+                    <p class="ui-form-explain">(以px为单位)</p>
+                </div>
+                <div class="ui-form-item ">
+                    <p class="generate_code"><textarea readonly rows="6"></textarea></p>
+
+                    <p class="ui-form-explain"><strong>把上面的代码复制到你网页上，这样就可以在您的网页上嵌入您设置的位置信息了！</strong></p>
+                    <!--<p><a href="#!/signup" class="ui-button ui-button-lorange" id="signup_btn">注册并保存</a></p>-->
+                </div>
+
+                <div class="ui-form-item">
+                    <label for="website" class="ui-label">网址: </label>
+                    <input class="ui-input" type="text" id="website" name="website" value=""/>
+                </div>
+                <div class="ui-form-item">
+                    <label for="email" class="ui-label">
+                        <span class="ui-form-required">*</span>
+                        邮箱:
+                    </label>
+                    <input class="ui-input" type="text" id="email" name="email" value=""/>
+                </div>
+                <div class="ui-form-item">
+                    <label for="password" class="ui-label">
+                        <span class="ui-form-required">*</span>
+                        密码:
+                    </label>
+                    <input class="ui-input" type="password" id="password" name="password" value=""/>
+                </div>
+                <div class="ui-form-item">
+                    <button type="submit" class="ui-button ui-button-lorange">保存</button>
+                    <input type="hidden" id="link_id"/>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="login" style="display: none;" class="box">
+        <form action="/login">
+            <div class="ui-form-item">
+                <label for="login_email" class="ui-label">
+                    <span class="ui-form-required">*</span>
+                    邮箱:
+                </label>
+                <input class="ui-input" type="text" name="email" id="login_email" value=""/>
+            </div>
+            <div class="ui-form-item">
+                <label for="login_password" class="ui-label">
+                    <span class="ui-form-required">*</span>
+                    密码:
+                </label>
+                <input class="ui-input" type="password" id="login_password" name="password" value=""/>
+            </div>
+            <div class="ui-form-item">
+                <button type="submit" class="ui-button ui-button-lorange">登陆</button>
+            </div>
+        </form>
+    </div>
+    <!--<div id="signup" style="display: none;" class="box">
+        <form action="/signup">
+            <div class="ui-form-item">
+                <label for="signup_website" class="ui-label">网址: </label>
+                <input class="ui-input" type="text" id="signup_website" name="website" value=""/>
+            </div>
+            <div class="ui-form-item">
+                <label for="signup_email" class="ui-label">
+                    <span class="ui-form-required">*</span>
+                    邮箱:
+                    </label>
+                <input class="ui-input" type="text" id="signup_email" name="email" value=""/>
+            </div>
+            <div class="ui-form-item">
+                <label for="signup_password" class="ui-label">
+                    <span class="ui-form-required">*</span>
+                    密码:
+                    </label>
+                <input class="ui-input" type="password" id="signup_password" name="password" value=""/>
+            </div>
+            <div class="ui-form-item">
+                <button type="submit" class="ui-button ui-button-lorange" id="signup_save">注册并保存</button>
+                <input type="hidden" id="signup_link_id" />
+            </div>
+        </form>
+    </div>-->
+</div>
+<script src="http://maps.googleapis.com/maps/api/js?v=3&sensor=true"></script>
+<script src="http://assets.paymapad.com/libs/seajs/1.2.0/sea.js"></script>
+<script>
+    seajs.config({
+        base:"http://assets.paymapad.com/",
+        alias:{
+            "$":"libs/jquery/1.8.1/jquery",
+            "jquery":"libs/jquery/1.8.1/jquery",
+            "uploadify":"libs/uploadify/jquery.uploadify",
+            "uploadify_css":"libs/uploadify/uploadify.css",
+            "underscore":"libs/underscore/1.3.3/underscore",
+            "backbone":"libs/backbone/0.9.9/backbone",
+
+            "link":"link/index"
+        }
+    });
+</script>
+<script>
+    window.clink = {
+        lat:0,
+        lng:0,
+        zoom:15,
+        id:"",
+        src:"",
+        info:"hihihi"
+    };
+    seajs.use("link");
+</script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <%- include include/title.html %>
+    <link media="all" href="<%= config.assetsRoot %>css/alice_1.0.0.css" rel="stylesheet">
+    <link href='<%= config.assetsRoot %>css/about.css?t=20130503.css' rel='stylesheet'>
+</head>
+<body>
+<div id="header">
+    <h1 id="title">PAYMAP<strong>AD</strong></h1>
+
+    <h2 id="sub-title">地图广告-在地图上发布基于位置的广告。</h2>
+
+    <p><a id="more" href="#" title="see more">&raquo;</a></p>
+</div>
+
+<!-- pages -->
+<div id="what" class="section">
+    <h2>地图广告是什么?</h2>
+
+    <div class="details">
+        <p class="line">
+            新一代位置广告发布平台，广告展示不影响地图原有的用户体验。<br/>
+            平台基于地理围栏技术、地理位置识别和图像识别技术，通过后台的广告匹配系统在内嵌地图的APP应用或网站上精准的投放位置广告，让广告投放更加精准。
+        </p>
+
+        <p class="img">
+            <img src="<%= config.imgRoot %>/about/fp.png"/>
+        </p>
+    </div>
+</div>
+<div id="how" class="section sec-even">
+    <h2>如何玩转地图广告?</h2>
+
+    <div class="details fn-clear">
+        <h3>STEP 1: 新建广告</h3>
+
+        <p class="img right">
+            <img src="<%= config.imgRoot %>/about/step1.png"/>
+        </p>
+
+        <p class="line">进入 <strong>[DASHBOARD]</strong> , 点击 <strong>[New One AD]</strong> , 进入广告编辑页面, 新建一条广告;</p>
+    </div>
+    <div class="details fn-clear">
+        <h3>STEP 2: 填写基本信息</h3>
+
+        <p class="img left">
+            <img src="<%= config.imgRoot %>/about/step2.png"/>
+        </p>
+
+        <p class="line">首先, 选择 <strong>[品牌推广]</strong> 或者 <strong>[优惠打折]</strong> , 如果是前者, 只需填写您的品牌, 产品或公司名称,
+            以及可以链接到的网址; 如果是后者, 则另外还需要填写地址信息;</p>
+
+        <p class="line">填写完后, 点击 <strong>[SAVE]</strong> 按钮, 等待保存之后, 在提示信息中, 点击 <strong>[CONFIGURE]</strong> 进入广告配置界面.
+        </p>
+    </div>
+    <div class="details fn-clear">
+        <h3>STEP 3: 配置广告图片信息</h3>
+
+        <p class="img right">
+            <img src="<%= config.imgRoot %>/about/step3.png"/>
+        </p>
+
+        <p class="line">我们提供了四种广告图片形状供您选择: 正方形, 圆形以及两种不同尺寸的矩形, 可以多选, 点击之后选择图片上传, 并在右边显示了桌面端与移动端的两种预览效果.</p>
+
+        <p class="line">接着, 选择广告弹出层样式, 有图文版与非图文版可选. 图文版选择图片上传并可以编辑文字信息.</p>
+
+        <p class="line">最后, 点击 <strong>[SAVE]</strong> 按钮, 等待保存之后, 在提示信息中, 点击 <strong>[LOCATION]</strong> 进入手工匹配广告位界面.
+        </p>
+    </div>
+    <div class="details fn-clear">
+        <h3>STEP 4: 手工匹配广告位(可选)</h3>
+
+        <p class="img left">
+            <img src="<%= config.imgRoot %>/about/step4.png"/>
+        </p>
+
+        <p class="line">首先, 选择百度或者谷歌地图, 待地图加载完后, 点击 <strong>[添加/删除位置]</strong> , 当移动右侧地图时, 会载入对应区域的空白广告位.</p>
+
+        <p class="line">这时, 点击某个空白广告位之后会显示之前您设置的广告图像, 这就表示了在此广告位匹配上了一条广告. 您也可以再次点击它取消匹配.</p>
+
+        <p class="line">最后, 点击 <strong>[SAVE]</strong> 按钮.</p>
+    </div>
+
+    <div class="details fn-clear">
+        <h3>STEP 5: 查看广告</h3>
+
+        <p class="img right">
+            <img src="<%= config.imgRoot %>/about/step5.png"/>
+        </p>
+
+        <p class="line">点击导航栏中的 <strong>[VIEW]</strong> , 载入地图之后, 拖动地图位置, 可查看之前添加的广告信息.</p>
+    </div>
+
+    <div class="details fn-clear" style="border:none;">
+        <h3>STEP 6: 管理广告信息</h3>
+
+        <p class="img right">
+            <img src="<%= config.imgRoot %>/about/step6.png"/>
+        </p>
+
+        <p class="line">进入 <strong>[DASHBOARD]</strong> , 在右侧已有广告信息显示页面可以对已有广告信息进行 <strong>[编辑]</strong> ,
+            <strong>[设置]</strong> , <strong>[查看]</strong> 和 <strong>[删除]</strong> .</p>
+    </div>
+</div>
+<div id="try" class="section">
+    <h2>从哪里开始?</h2>
+
+    <div class="details">
+        <p class="img">
+            <a href="/" title="点击这里, 马上开始!"><img src="<%= config.imgRoot %>/about/where.png"/></a>
+        </p>
+    </div>
+</div>
+<div id="us" class="section sec-even">
+    <h2>关注我们更多?</h2>
+
+    <div class="details">
+        <a href="http://5peng.com" title="了解下我们公司"><img src="http://assets.paymapad.com/link/logo.png"
+                                                        alt="http://5peng.com"/></a>
+
+        <a href="http://weibo.com/paymapad" title="在新浪微博上关注我们"><img src="<%= config.imgRoot %>/sina_weibo.png"
+                                                                    alt="http://weibo.com/paymapad"/></a>
+    </div>
+</div>
+<div id="footer">
+    <p><a href="#" id="top" title="go to top">&laquo;</a></p>
+</div>
+<%- include include/assets_config.html %>
+<script>
+    seajs.use("about");
+</script>
+
+</body>
+</html>
+

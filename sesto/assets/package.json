@@ -1,0 +1,22 @@
+{
+  "name": "sesto",
+  "version": "1.0.0",
+  "description": "sesto assets",
+  "homepage": "http://xxx.com",
+  "keywords": [],
+  "author": "Liz <shengyan1985@gmail.com> ",
+  "private": true,
+  "spm": {
+    "dependencies": {
+      "normalize.css": "3.0.1",
+      "jquery": "2.1.1"
+    },
+    "engines": {
+      "seajs": "2.3.0"
+    },
+    "output": [
+      "index.css",
+      "index.js"
+    ]
+  }
+}

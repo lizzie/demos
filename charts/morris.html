@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>charts</title>
+    <script src="http://assets.spmjs.org/seajs/seajs/2.0.0/sea.js"></script>
+    <script>
+        seajs.config({
+            alias: {
+                "$": "jquery/jquery/1.10.1/jquery",
+                "morris": "gallery/morris/0.4.1/morris-debug"
+            }
+        });
+    </script>
+<body>
+<div id="bar-example" style="width: 600px;"></div>
+
+<script>
+    seajs.use(["$", "morris"], function ($, Morris) {
+        Morris.Bar({
+            element: 'bar-example',
+            data: [
+                { y: '2006', a: 100, b: 90 },
+                { y: '2007', a: 75, b: 65 },
+                { y: '2008', a: 50, b: 40 },
+                { y: '2009', a: 75, b: 65 },
+                { y: '2010', a: 50, b: 40 },
+                { y: '2011', a: 75, b: 65 },
+                { y: '2012', a: 100, b: 90 }
+            ],
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['Series A', 'Series B']
+        });
+    });
+</script>
+</body>
+</html>

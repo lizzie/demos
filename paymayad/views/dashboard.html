@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <%- include include/title.html %>
+    <%- include include/assets.html %>
+</head>
+<body>
+<%- include include/header.html %>
+
+<!-- pages -->
+<section id="dashboard" class="page row-fluid">
+    <div class="span2">
+        <div id="side">
+            <a href="#!/new" class="btn btn-block btn-danger">New One AD</a>
+            <ul class="nav nav-list">
+                <li class="nav-header">Ad List</li>
+                <li class="active"><a href="#!/">All</a></li>
+                <li><a href="#!/">Search</a></li>
+                <li class="divider"></li>
+                <li class="nav-header">Ad in Maps</li>
+                <% for(var map in config.adMap) { %>
+                <li class="viewer"><a href="/view?map=<%= map %>" target="_blank"><%= map %> Map</a></li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+    <div class="span10">
+        <div id="ad-list"></div>
+    </div>
+</section>
+<section id="editor" class="page">
+    <div id="toolbar">
+        <div id="edit" class="panel hide">
+            <div class="actions">
+                <button type="button" class="btn btn-danger btn-large J_finish" data-loading-text="Saving...">Save
+                </button>
+            </div>
+            <ul class="nav nav-box nav-box-3">
+                <li><a href="#choose_category" data-toggle="tab" data-steps="1">选择广告类别</a></li>
+                <li><a href="#add_address" data-toggle="tab" data-steps="2">填写地址信息</a></li>
+                <li><a href="#complete_information" data-toggle="tab" data-steps="3">填写信息</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane" id="choose_category">
+                    <div class="btn-group" data-toggle="buttons-radio">
+                        <% for(var cate in config.adCate) { %>
+                        <button type="button" data-cate-id="<%= cate %>" class="btn btn-primary J_ad_category"><%=
+                            config.adCate[cate]['title'] %>
+                        </button>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="tab-pane" id="add_address">
+                    <p class="form-inline">
+                        <input type="text" placeholder="address or latlng" id="J_latlng"/>
+                        <button type="button" class="btn btn-info J_add_latlng">Add</button>
+                    </p>
+                    <p id="J_latlng_tags"></p>
+                </div>
+                <div class="tab-pane" id="complete_information">
+                    <div class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label" for="J_ad_name">名字</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="name" id="J_ad_name"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="J_ad_link">目标链接</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="http://" id="J_ad_link" value="http://"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="configure" class="panel hide">
+            <div class="actions">
+                <button type="button" class="btn btn-danger btn-large J_finish" data-loading-text="Saving...">Save
+                </button>
+            </div>
+            <ul class="nav nav-box nav-box-2">
+                <li><a href="#choose_icon" data-toggle="tab" data-steps="11">配置广告图片信息</a></li>
+                <li><a href="#choose_style" data-toggle="tab" data-steps="12">选择广告弹出层样式</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane" id="choose_icon">
+                    <% for(var shape in config.adShape) { %>
+                    <div class="row-fluid upload_pic_wrap">
+                        <div class="span6 J_upload_pic" data-title="<%= config.adShape[shape]['title'] %>"
+                             data-img-type="*.jpg; *.png" data-shape-id="<%= shape %>">
+                            <input type="file"/>
+                        </div>
+                        <div class="span6 ">
+                            <img class="img-<%= config.adShape[shape]['style'] %>"
+                                 style="width: <%= config.adShape[shape]['width'] %>px; height: <%= config.adShape[shape]['height'] %>px;"
+                                 data-suffix="<%= config.getSuffix(config.adShape[shape]['width'], config.adShape[shape]['height']) %>"/>
+                            <img class="img-<%= config.adShape[shape]['style'] %>"
+                                 style="width: <%= Math.ceil(config.adShape[shape]['width']/2) %>px; height: <%= Math.ceil(config.adShape[shape]['height']/2) %>px;"
+                                 data-suffix="<%= config.getSuffix(Math.ceil(config.adShape[shape]['width']/2), Math.ceil(config.adShape[shape]['height']/2)) %>"/>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+
+                <div class="tab-pane" id="choose_style">
+                    <% for(var style in config.adStyle) { %>
+                    <div class="row-fluid upload_pic_wrap">
+                        <div class="span5">
+                            <label class="radio inline J_switch_style">
+                                <input type="radio" name="style" value="<%= style %>">
+                                样式<%= style %> (<%= config.adStyle[style]['title'] %>)
+                                <!--<img src="<%= config.imgRoot %>/default.png" style="width: 120px; height: 80px;"/>-->
+                            </label>
+                        </div>
+                        <div class="span7 J_upload_pic <% if(config.adStyle[style]['desc']) { %> show-desc <% } %>"
+                             data-style-id="<%= style %>" data-title="添加弹出层图片" data-img-type="*.jpg; *.png">
+                            <input type="file"/>
+                            <textarea rows="3" class="J_info_description"></textarea>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div id="location" class="panel hide">
+            <div class="actions">
+                <button type="button" class="btn btn-danger btn-large J_finish" data-loading-text="Saving...">Save
+                </button>
+            </div>
+            <ul class="nav nav-box nav-box-2">
+                <li><a href="#choose_map" data-toggle="tab" data-steps="21">选择地图</a></li>
+                <li><a href="#edit_position" data-toggle="tab" data-steps="22">添加/删除位置</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane" id="choose_map">
+                    <div class="btn-group" data-toggle="buttons-radio">
+                        <% for(var map in config.adMap) { %>
+                        <button type="button" data-map-id="<%= config.adMap[map]['mapTypeID'] %>"
+                                class="btn btn-primary J_ad_map_type"><%= map %>
+                        </button>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="tab-pane" id="edit_position">
+                    <p>请在地图上选择空白的广告位, 添加广告.</p>
+
+                    <p id="J_choose_latlng_tags"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="playground">
+        <div id="google_map" class="maps"></div>
+        <div id="baidu_map" class="maps"></div>
+    </div>
+</section>
+
+<!-- utility -->
+<div id="loading" style="display: none;">
+    <img src="<%= config.imgRoot %>/bigger_spinner.gif">
+</div>
+
+<div id="remove-box" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Remove</h3>
+    </div>
+    <div class="modal-body">
+        <p></p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary J_remove_confirm" data-id="">Confirm</button>
+    </div>
+</div>
+
+<script id="ad-list-tpl" type="text/template">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>AD Name</th>
+            <th>cateID</th>
+            <th>Marker</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#data}}
+        <tr data-id="{{ _id }}">
+            <td><a href="/view?maptypeid={{ recentMapTypeID }}&latlng={{ latlng }}&zoom={{ recentZoom }}"
+                   target="_blank">{{ name }}</a></td>
+            <td>{{ cateID }}</td>
+            <td>
+                {{{imgUrl}}}
+            </td>
+            <td>
+                <a href="#!/edit/{{ _id }}" title="edit ad info" class="icon-edit"></a>
+                <a href="#!/configure/{{ _id }}" title="configure ad" class="icon-wrench"></a>
+                <a href="#!/location/{{ _id }}" title="location ad" class="icon-map-marker"></a>
+                <a href="#" class="J_ad_remove icon-remove"></a>
+            </td>
+        </tr>
+        {{/data}}
+        {{^data}}
+        <tr>
+            <td colspan="4" style="text-align: center;"><span class="badge badge-warning">暂无数据</span></td>
+        </tr>
+        {{/data}}
+        </tbody>
+    </table>
+</script>
+
+<%- include include/assets_config.html %>
+<script>
+    seajs.use("dashboard");
+</script>
+</body>
+</html>

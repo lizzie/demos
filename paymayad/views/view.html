@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <%- include include/title.html %>
+    <%- include include/assets.html %>
+</head>
+<body>
+<%- include include/header.html %>
+<!-- pages -->
+<section id="playground">
+    <div id="google_map" class="maps"></div>
+    <div id="baidu_map" class="maps"></div>
+    <div id="gaode_map" class="maps"></div>
+</section>
+<% if (mapType === "gaode") { %>
+<script src="http://webapi.amap.com/maps?v=1.1"></script>
+<% } %>
+<%- include include/assets_config.html %>
+<script>
+    seajs.use("viewer");
+</script>
+</body>
+</html>

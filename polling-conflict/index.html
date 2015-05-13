@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+  <script
+      src="https://a.alipayobjects.com/??seajs/seajs/2.1.1/sea.js"></script>
+</head>
+<body>
+<script>
+  seajs.config({
+    alias: {
+      '$': 'jquery/jquery/1.7.2/jquery',
+      '$-debug': 'jquery/jquery/1.7.2/jquery',
+      'jquery': 'jquery/jquery/1.7.2/jquery',
+      'jquery-debug': 'jquery/jquery/1.7.2/jquery-debug',
+      'seajs-debug': 'seajs/seajs-debug/1.1.1/seajs-debug'
+    },
+    vars: {
+      locale: 'zh-cn'
+    }
+  });
+</script>
+
+<script>
+  seajs.use(['jquery-debug'], function($) {
+    setTimeout(function() {
+      $.ajax({
+        url: 'http://127.0.0.1:8081/',
+        dataType: "jsonp",
+        data: {
+          biztype: 'cashier',
+          timeout: 8000
+        },
+        jsonp: '_callback',
+        jsonpCallback: 'jQuery_push',
+        success: function(rsp) {
+          console.info('--succ-->- 1', rsp)
+          if (rsp.mid && rsp.data && rsp.data.goto) {
+            console.log('successPay 1');
+          } else {
+            console.log('polling in success 1');
+          }
+        },
+        error: function() {
+debugger;
+          console.log('polling in error 1');
+        }
+      });
+    }, 100);
+
+    setTimeout(function() {
+      $.ajax({
+        url: 'http://127.0.0.1:8081/',
+        dataType: "jsonp",
+        data: {
+          timeout: 15000
+        },
+        jsonp: '_callback',
+        jsonpCallback: 'jQuery_push',
+        success: function(rsp) {
+          console.info('--succ-->- 2', rsp)
+          if (rsp.mid && rsp.data && rsp.data.goto) {
+            console.log('successPay 2');
+          } else {
+            console.log('polling in success 2');
+          }
+        },
+        error: function() {
+          console.log('polling in error 2');
+        }
+      });
+
+    }, 1000);
+  });
+</script>
+</body>
+</html>

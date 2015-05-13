@@ -1,0 +1,463 @@
+@indexHeaderHeight: 140px;
+@headerHeight: 100px;
+@navHeight: 40px;
+@authHeight: 24px;
+@navColor: #3887be;
+@footerHeight: 80px;
+@bgColor: #7fb5e5;
+
+.inline-block(){
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+.clear-fix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clear-fix {
+    display: inline-block;
+}
+
+/* Hides from IE-mac \*/
+* html .clear-fix {
+    height: 1%;
+}
+
+.clear-fix {
+    display: block;
+}
+
+/* End hide from IE-mac */
+
+a:hover {
+    text-decoration: none;
+}
+
+body.fullscreen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+header {
+    position: relative;
+
+    height: @headerHeight;
+    line-height: @headerHeight;
+
+    z-index: 10; //    box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
+
+    #logo {
+        padding-left: 20px;
+    }
+    #title {
+        color: #999;
+        font-size: 26px;
+    }
+    #sub-title {
+        color: #bbb;
+        font-size: 20px;
+        margin-left: 10px;
+        font-family: 'Josefin Sans', cursive;
+    }
+
+    nav a {
+        .inline-block();
+
+        width: 20%;
+        margin-right: 3%;
+        height: @navHeight;
+        margin-right: 20px; //color: @navColor;
+        line-height: @navHeight;
+        text-align: center;
+        text-transform: uppercase;
+        border-radius: 4px;
+
+        &:hover { //color: lighten(@navColor, 20%);
+            background: #eee;
+        }
+        &.active {
+            color: #fff;
+            background: #8a8acb;
+
+            box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 5px;
+
+            &:hover {
+                background: #bd93e5;
+            }
+        }
+    }
+
+    .bl, .br {
+        position: absolute;
+        height: 24px;
+        width: 600px;
+        bottom: -24px;
+        background: transparent url(http://pic.paymapad.com/img/shadow.png) left top no-repeat;
+    }
+    .bl {
+        left: 0;
+    }
+    .br {
+        right: 0;
+        background-position: right top;
+    }
+}
+
+#auth {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 12;
+
+    a {
+        .inline-block();
+
+        color: #999;
+        width: 100px;
+        margin-right: 1px;
+        background: #f8f8f8;
+        height: @authHeight;
+        line-height: @authHeight;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    > a:last-child {
+        margin-right: 0;
+    }
+
+    #gplus-btn {
+        margin: 4px 2px 0 0;
+    }
+}
+
+#message {
+    position: fixed;
+    _position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: @headerHeight;
+    line-height: @headerHeight;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    z-index: 110;
+
+    background: #aaa;
+    background: rgba(170, 170, 170, 0.9);
+
+    &.success {
+        background: #b4d478;
+        background: rgba(180, 212, 120, 0.9);
+    }
+    &.error {
+        background-color: #e66;
+        background-color: rgba(238, 100, 100, 0.9);
+    }
+
+    .close {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+    }
+
+}
+
+footer {
+    height: @footerHeight;
+    line-height: @footerHeight;
+    background-color: #3c4e5a;
+    text-align: center;
+
+    color: #ccc;
+
+    a:hover {
+        color: #ccc;
+    }
+}
+
+.page {
+    padding-top: 50px;
+    display: none;
+}
+
+#dashboard {
+    #side {
+        padding-left: 30px;
+
+        .btn {
+            margin-bottom: 20px;
+        }
+        .viewer a {
+            text-transform: uppercase;
+        }
+    }
+}
+
+#editor {
+    position: absolute;
+    left: 0;
+    top: @headerHeight;
+    right: 0;
+    bottom: 0;
+
+    #toolbar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 30%;
+        background: white;
+        overflow: auto;
+
+        .panel {
+            .actions {
+                padding: 20px;
+                text-align: center;
+                background: #f8f8f8;
+
+                .btn {
+                    padding: 8px 40px;
+                    text-transform: uppercase;
+                }
+            }
+
+            .nav-box {
+                display: box;
+                display: -webkit-box;
+                display: -moz-box;
+                border-top: 1px solid #eee;
+                box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+
+                display: -ms-flexbox;
+                -ms-flex-pack: justify;
+
+                li {
+                    box-flex: 1;
+                    -webkit-box-flex: 1;
+                    -moz-box-flex: 1;
+                    border-right: 1px solid #eee;
+                    border-bottom: 1px solid #eee;
+                    text-align: center;
+
+                    a {
+                        padding: 10px 0;
+                        background: #f8f8f8;
+                        color: #999;
+
+                        &:hover {
+                            color: #666;
+                        }
+                    }
+                    &.active {
+                        border-bottom: none;
+                        a, a:hover {
+                            color: #666;
+                            background: white;
+                        }
+                    }
+                    &.disabled {
+                        a, a:hover {
+                            color: #ccc;
+                        }
+                    }
+                }
+            }
+
+            .tab-content {
+                padding: 20px;
+
+                .form-horizontal {
+                    label {
+                        width: 100px;
+                    }
+
+                    .controls {
+                        margin-left: 120px;
+                    }
+                }
+
+                .upload_pic_wrap {
+                    height: 140px;
+
+                    textarea {
+                        visibility: hidden;
+                        width: 180px;
+                    }
+
+                    .show-desc textarea {
+                        visibility: visible;
+                    }
+
+                    img {
+                        margin: 0 4px 4px 0;
+                    }
+                    label.radio {
+                        padding-top: 0;
+                    }
+                }
+
+                .btn-group .btn {
+                    text-transform: uppercase;
+                }
+                .label {
+                    padding: 4px 8px;
+                    margin-bottom: 4px;
+
+                    i {
+                        margin-left: 6px;
+                    }
+                }
+            }
+
+        }
+    }
+    #playground {
+        left: 30%;
+        top: 0;
+    }
+}
+
+#playground {
+    position: absolute;
+    left: 0;
+    top: @headerHeight;
+    right: 0;
+    bottom: 0;
+
+    background: #ccc url(http://pic.paymapad.com/img/loading.gif) no-repeat center center;
+
+    .maps {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        visibility: hidden;
+
+    }
+
+    img {
+        max-width: none;
+    }
+}
+
+#map {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    background: #dedede;
+}
+
+#auth-body, #notfound {
+    position: absolute;
+    left: 0;
+    top: @headerHeight;
+    right: 0;
+    bottom: 0;
+    background: @bgColor url(http://pic.paymapad.com/img/splash_1.jpg) center center no-repeat;
+
+    .content {
+        position: absolute;
+        width: 500px;
+        height: 300px;
+        top: 50%;
+        left: 50%;
+        margin-left: -250px;
+        margin-top: -150px;
+        background: white;
+
+        form {
+            margin: 40px 0;
+        }
+    }
+}
+
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans);
+
+#notfound .content {
+    background: transparent;
+
+    h2 {
+        font-family: 'Josefin Sans', cursive;
+        font-size: 120px;
+        font-weight: 100;
+        color: white;
+    }
+    #enter {
+        display: block;
+        padding-left: 50px;
+        margin-top: 30px;
+        font-family: 'Josefin Sans', cursive;
+        font-size: 20px;
+        color: white;
+        font-style: italic;
+        text-shadow: 1px 0px 2px #333;
+    }
+}
+
+.ad-info-window {
+    width: 320px;
+    height: 240px;
+    overflow: hidden;
+
+    td {
+        vertical-align: top;
+    }
+
+    img {
+        width: 240px;
+        height: 240px;
+    }
+}
+
+.ad-info-window-2 {
+    width: 240px;
+    height: 180px;
+
+    img {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+#loading {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 32px;
+    height: 32px;
+    margin-left: -16px;
+    margin-top: -16px;
+
+    z-index: 100;
+}
+
+#login-box form {
+    margin: 0;
+}
+
+body.home {
+    header, #message {
+        height: @indexHeaderHeight;
+        line-height: @indexHeaderHeight;
+    }
+    #editor, #playground, #auth-body {
+        top: @indexHeaderHeight;
+    }
+}

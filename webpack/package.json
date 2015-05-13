@@ -1,0 +1,31 @@
+{
+  "name": "webpack-demo",
+  "version": "1.0.0",
+  "description": "webpack demos",
+  "main": "index.js",
+  "scripts": {
+    "demo-1": "webpack-dev-server --config demo-1/webpack.config.js --hot --progress --colors --port 2992 --inline",
+    "demo-2": "webpack-dev-server --config demo-2/webpack.config.js --hot --progress --colors --port 2992 --inline",
+    "demo-3": "webpack-dev-server --config demo-3/webpack.config.js --hot --progress --colors --port 2992 --inline",
+    "demo-4": "webpack-dev-server --config demo-4/webpack.config.js --hot --progress --colors --port 2992 --inline",
+    "demo-5": "webpack-dev-server --config demo-5/webpack.config.js --hot --progress --colors --port 2992 --inline"
+  },
+  "author": "Liz",
+  "license": "MIT",
+  "devDependencies": {
+    "css-loader": "^0.9.1",
+    "file-loader": "^0.8.1",
+    "jsx-loader": "^0.12.2",
+    "less": "^2.4.0",
+    "less-loader": "^2.1.0",
+    "style-loader": "^0.8.3",
+    "url-loader": "^0.5.5",
+    "webpack": "^1.7.3",
+    "webpack-dev-server": "^1.7.0"
+  },
+  "dependencies": {
+    "image-webpack-loader": "^1.4.0",
+    "react": "^0.13.1",
+    "react-router": "^0.13.1"
+  }
+}

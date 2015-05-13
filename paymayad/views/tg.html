@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <style>
+        #map {
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+<script src="http://maps.googleapis.com/maps/api/js?v=3&sensor=true"></script>
+<%- include include/assets_config.html %>
+<script>
+
+    // 地图初始中心点位置和等级
+    window.initData = {
+        lat:0,
+        lng:0,
+        zoom:3
+    };
+    seajs.use("tg");
+</script>
+</body>
+</html>
+

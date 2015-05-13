@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <%- include include/title.html %>
+    <link rel="stylesheet" href="<%= config.assetsRoot %>css/bootstrap.css">
+    <link rel="stylesheet" href="<%= config.assetsRoot %>css/capture.css">
+    <script src="<%= config.assetsRoot %>html5.js"></script>
+</head>
+<body>
+<header class="capture" style="display: none;">
+    <div class="row-fluid">
+        <div class="span4">
+            <div class="J_pan btn-group">
+                <button type="button" class="btn J_Up"><i class="icon-arrow-up"></i></button>
+                <button type="button" class="btn J_Down"><i class="icon-arrow-down"></i></button>
+                <button type="button" class="btn J_Left"><i class="icon-arrow-left"></i></button>
+                <button type="button" class="btn J_Right"><i class="icon-arrow-right"></i></button>
+                <button type="button" class="btn J_Zoomout"><i class="icon-zoom-out"></i></button>
+                <button type="button" class="btn J_Zoomin"><i class="icon-zoom-in"></i></button>
+                <button type="button" id="J_Zoomcurrent" class="btn  disabled" disabled="disabled"></button>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="J_pan">
+                <button type="button" class="btn btn-danger J_Capture">Capture</button>
+            </div>
+        </div>
+        <div class="span4">
+            <div class="J_done btn-group" style="display: none;">
+                <button type="button" class="btn btn-info J_save">Save</button>
+                <button type="button" class="btn btn-info J_cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div id="J_toggle">
+        <i class="icon-chevron-left"></i>
+        <i class="icon-repeat" id="J_auto_running" style="display: none;"></i>
+    </div>
+</header>
+<div id="map"></div>
+
+<div id="J_map_overlay"></div>
+<% if (mapType === "gaode") { %>
+<script src="http://webapi.amap.com/maps?v=1.1"></script>
+<% } %>
+<%- include include/assets_config.html %>
+<script>
+    seajs.use("capture");
+</script>
+</body>
+</html>

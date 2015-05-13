@@ -1,0 +1,22 @@
+{
+    "name": "sofa-insight",
+    "version": "1.0.0",
+    "description": "sofa insight static demo",
+    "author": "乔花 <shengyan1985@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/AdaInitiative/lizzie.git"
+    },
+    "bugs": {
+        "url": "https://github.com/AdaInitiative/lizzie/issues"
+    },
+    "spm": {
+        "alias": {
+            "$": "jquery/jquery/1.10.1/jquery",
+            "handlebars": "gallery/handlebars/1.0.2/handlebars",
+            "underscore": "gallery/underscore/1.4.4/underscore"
+        },
+        "output": [
+        ]
+    }
+}

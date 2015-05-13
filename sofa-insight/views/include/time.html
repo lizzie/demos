@@ -1,0 +1,43 @@
+            <div class="sf-panel">
+                <div class="btn-group pull-right" id="J_time_choose" data-type="<%= title %>" >
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" id="dropdownMenu">
+                        选择时间
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                        <li><a tabindex="-1" href="#" data-val="15" data-default>最近15分钟</a></li>
+                        <li><a tabindex="-1" href="#" data-val="30">最近30分钟</a></li>
+                        <li><a tabindex="-1" href="#" data-val="60">最近1小时</a></li>
+                        <li><a tabindex="-1" href="#" data-val="240">最近4小时</a></li>
+                        <li><a tabindex="-1" href="#" data-val="480">最近8小时</a></li>
+                        <li class="divider"></li>
+                        <li><a tabindex="-1" href="#" data-val="0">自定义</a></li>
+                    </ul>
+                </div>
+                <!--<div class="btn-group">
+                    <button class="btn">日</button>
+                    <button class="btn">周</button>
+                    <button class="btn">月</button>
+                </div>-->
+            </div>
+            <div class="sf-panel" id="J_custom_time_panel"style="display: none;">
+                <form class="form-search">
+                    <div class="input-prepend input-datetimepicker">
+                        <span class="add-on">开始时间</span>
+                        <input  data-format="dd/MM/yyyy hh:mm:ss" class="input-medium" type="text" name="start_time" placeholder="2013/07/01 00:00:00">
+                    </div>
+                    <div class="input-prepend input-append input-datetimepicker">
+                        <span class="add-on">结束时间</span>
+                        <input  data-format="dd/MM/yyyy hh:mm:ss" class="input-medium" type="text" name="end_time" placeholder="2013/07/01 23:59:59">
+                        <% if(title !== "Search"){ %><button type="submit" class="btn">确定</button><% } %>
+                    </div>
+
+                    <% if(title === "Search") { %>
+                    <div class="input-prepend input-append ">
+                        <span class="add-on">入口名称</span>
+                        <input class="input-medium" type="text" name="entrance_name" placeholder="entrance name">
+                        <button type="submit" class="btn">确定</button>
+                    </div>
+                    <% } %>
+                </form>
+            </div>

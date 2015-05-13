@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <%- include include/title.html %>
+    <%- include include/assets.html %>
+</head>
+<body>
+<%- include include/header.html %>
+
+<!-- pages -->
+<section id="auth-body">
+    <div class="content">
+        <% if (action === "register") { %>
+        <h2 style="padding: 80px 0; text-align: center;">Coming Soon...</h2>
+        <% } else { %>
+        <form class="form-horizontal" action="/<%= action %>" method="post">
+            <% if(status === -1) { %>
+            <div class="control-group">
+                <div style="text-align: center;color: red; font-weight: bold;"><%= message %></div>
+            </div>
+            <% } %>
+            <% if(status === 1) { %>
+            <div class="control-group">
+                <div style="text-align: center;color: green; font-weight: bold;"><%= message %></div>
+                <script>
+                    setTimeout(function () {
+                        window.location.href = "/dashboard";
+                    }, 3000);
+                </script>
+            </div>
+            <% } else { %>
+            <div class="control-group">
+                <label class="control-label" for="email">Email</label>
+
+                <div class="controls">
+                    <input type="text" id="email" placeholder="Email" name="email" autocomplete="off"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="password">Password</label>
+
+                <div class="controls">
+                    <input type="password" id="password" placeholder="Password" name="password" autocomplete="off"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-primary" type="submit">Confirm</button>
+                </div>
+            </div>
+            <% } %>
+        </form>
+        <% } %>
+    </div>
+</section>
+
+<%- include include/assets_config.html %>
+<script>
+    //seajs.use("/assets/index.js");
+</script>
+</body>
+</html>

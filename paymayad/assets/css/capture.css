@@ -1,0 +1,110 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 40px;
+  border-bottom: 1px solid #000;
+  background-color: #2d2d2d;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.4) 0 2px 6px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 2px 6px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.4) 0 2px 6px;
+}
+header.capture {
+  padding-top: 10px;
+  background: white;
+  text-align: center;
+}
+#map {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  background: #dedede;
+}
+#J_map_overlay {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0);
+}
+#J_map_overlay.loading {
+  background: rgba(255, 255, 255, 0.8);
+}
+#J_map_overlay.drawing {
+  background: rgba(255, 255, 255, 0.4);
+}
+#J_map_overlay img,
+#J_map_overlay .place img {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  margin-left: -16px;
+  margin-top: -16px;
+}
+#J_map_overlay .J_place {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: transparent none no-repeat center center;
+  cursor: pointer;
+}
+#J_map_overlay #tips {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 200px;
+  height: 60px;
+  margin-left: -60px;
+  margin-top: -30px;
+  line-height: 60px;
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+#J_toggle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2%;
+  height: 50px;
+  line-height: 50px;
+  background: #ededed;
+  border-left: 4px #333 solid;
+  cursor: pointer;
+  text-align: center;
+}
+#J_auto_running {
+  position: absolute;
+  right: -20px;
+  top: 18px;
+  -webkit-animation-name: rotate;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-delay: 0s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-play-state: running;
+}
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}

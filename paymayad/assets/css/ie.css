@@ -1,0 +1,13 @@
+#editor #toolbar .panel .nav-box li {
+    float: left;
+
+    width: 49%;
+}
+
+#editor #toolbar .panel .nav-box-3 li {
+    width: 33%;
+}
+
+#editor #toolbar .panel .tab-content {
+    clear: both;
+}

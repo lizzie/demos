@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <%- include include/title.html %>
+    <%- include include/assets.html %>
+</head>
+<body>
+<%- include include/header.html %>
+<!-- pages -->
+<section id="playground">
+    <div id="baidu_map" class="maps" style="visibility: visible;"></div>
+</section>
+<script src="http://api.map.baidu.com/api?v=1.4"></script>
+
+<%- include include/assets_config.html %>
+<script>
+    seajs.use("viewer_baidu");
+</script>
+</body>
+</html>

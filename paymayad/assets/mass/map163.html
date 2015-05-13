@@ -1,0 +1,571 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+    <title>Google瓦片地图算法解析 | 电子地图-GIS软件-LBS-基本算法相关资料</title>
+    <meta name="description" content="基本概念："/>
+    <meta name="keywords" content="google,Map,算法解析"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="generator" content="WordPress 3.5.1"/>
+    <!-- leave this for stats please -->
+    <link rel="stylesheet" href="./style.css" type="text/css" media="screen"/>
+    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.map163.com/?feed=rss2"/>
+    <link rel="alternate" type="text/xml" title="RSS .92" href="http://www.map163.com/?feed=rss"/>
+    <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.map163.com/?feed=atom"/>
+    <link rel="pingback" href="http://www.map163.com/xmlrpc.php"/>
+    <link rel='archives' title='2013 年四月' href='http://www.map163.com/?m=201304'/>
+    <link rel='archives' title='2013 年三月' href='http://www.map163.com/?m=201303'/>
+    <link rel="alternate" type="application/rss+xml" title="电子地图-GIS软件-LBS-基本算法相关资料 &raquo; Google瓦片地图算法解析 评论 Feed"
+          href="http://www.map163.com/?feed=rss2&#038;p=418"/>
+    <link rel='stylesheet' id='admin-bar-css' href='http://www.map163.com/wp-includes/css/admin-bar.min.css?ver=3.5.1'
+          type='text/css' media='all'/>
+    <script type='text/javascript' src='http://www.map163.com/wp-includes/js/comment-reply.min.js?ver=3.5.1'></script>
+    <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.map163.com/xmlrpc.php?rsd"/>
+    <link rel="wlwmanifest" type="application/wlwmanifest+xml"
+          href="http://www.map163.com/wp-includes/wlwmanifest.xml"/>
+    <link rel='prev' title='普适GIS，平台开拓促发展' href='http://www.map163.com/?p=429'/>
+    <link rel='next' title='读这本书的要求是——身临其境，The Silent History用LBS改造电子书的阅读体验' href='http://www.map163.com/?p=442'/>
+    <meta name="generator" content="WordPress 3.5.1"/>
+    <link rel='canonical' href='http://www.map163.com/?p=418'/>
+    <style type="text/css">.recentcomments a {
+        display: inline !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }</style>
+    <style type="text/css" media="print">#wpadminbar {
+        display: none;
+    }</style>
+    <style type="text/css" media="screen">
+        html {
+            margin-top: 28px !important;
+        }
+
+        * html body {
+            margin-top: 28px !important;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <div id="nav">
+        <div class="logo">
+            <h1><a href="http://www.map163.com" title="电子地图-GIS软件-LBS-基本算法相关资料 | map163"></a></h1>
+        </div>
+
+        <form method="get" class="search-form" action="/">
+            <input class="search-input" name="s" type="text" placeholder="输入关键字 回车搜索" autofocus="" x-webkit-speech="">
+            <input class="search-submit" type="submit" value="搜索">
+        </form>
+
+    </div>
+</div>
+<div id="wrapper">
+<div id="container">
+    <div class="post" id="post-418">
+        <h2><a href="http://www.map163.com/?p=418" title="阅读更多关于《Google瓦片地图算法解析》">Google瓦片地图算法解析</a></h2>
+
+        <div class="entry">
+            <div class="postmetadata">
+                作者: <a href="http://www.map163.com/?author=3" title="由 minmin 发布" rel="author">minmin</a> 发表日期: <span>2013年03月29日</span>
+                分类: <a href="http://www.map163.com/?cat=3" title="查看 GOOGLE地图软件 中的全部文章" rel="category">GOOGLE地图软件</a>,
+                <a href="http://www.map163.com/?cat=7" title="查看 地图及位置有关的算法 中的全部文章" rel="category">地图及位置有关的算法</a>
+                标签: <a href="http://www.map163.com/?tag=google-t" rel="tag">google</a> , <a
+                    href="http://www.map163.com/?tag=map-2" rel="tag">Map</a> , <a
+                    href="http://www.map163.com/?tag=%e7%ae%97%e6%b3%95%e8%a7%a3%e6%9e%90" rel="tag">算法解析</a>
+                评论数: <a href="http://www.map163.com/?p=418#respond" title="《Google瓦片地图算法解析》上的评论">0</a> 条 <a
+                    class="post-edit-link" href="http://www.map163.com/wp-admin/post.php?post=418&amp;action=edit"
+                    title="编辑文章">[编辑]</a></div>
+            <p><strong>基本概念：</strong></p>
+            <ul>
+                <li><strong>地图瓦片地址</strong>：<a title="Google瓦片"
+                                               href="http://mt2.google.cn/vt/lyrs=m@167000000&amp;hl=zh-CN&amp;gl=cn&amp;x=420&amp;y=193&amp;z=9&amp;s=Galil"
+                                               target="_blank">http://mt2.google.cn/vt/lyrs=m@167000000&amp;hl=zh-CN&amp;gl=cn&amp;x=420&amp;y=193&amp;z=9&amp;s=Galil</a>
+                </li>
+            </ul>
+            <p><a href="http://www.map163.com/wp-content/uploads/2013/03/lyrs.png"><img
+                    class="alignnone size-full wp-image-421" alt="lyrs"
+                    src="http://www.map163.com/wp-content/uploads/2013/03/lyrs.png" width="256" height="256"/></a></p>
+
+            <p>现在就是要将一张张这类的地图瓦片，在客户端拼接成一幅完整的地图。</p>
+
+            <p>瓦片大小为：256&#215;256。</p>
+
+            <p>url中关键参数解析：</p>
+            <table border="0">
+                <tbody>
+                <tr>
+                    <td><strong>参数</strong></td>
+                    <td><strong>描述</strong></td>
+                </tr>
+                <tr>
+                    <td>mt2.google.cn</td>
+                    <td>Google瓦片服务服务器，可以尝试mt1.google.cn依然有效。Google提供多台瓦片服务器，减轻服务器负载，提高网络访问效率。</td>
+                </tr>
+                <tr>
+                    <td>x</td>
+                    <td>瓦片的横向索引，起始位置为最左边，数值为0，向右+1递增。</td>
+                </tr>
+                <tr>
+                    <td>y</td>
+                    <td>瓦片的纵向索引，起始位置为最上面，数值为0，向下+1递增。</td>
+                </tr>
+                <tr>
+                    <td>z</td>
+                    <td>地图的级别，以Google为例，最上一级为0，向下依次递增。</td>
+                </tr>
+                </tbody>
+            </table>
+            <ul>
+                <li><strong>地图投影：</strong>Web墨卡托——互联网地图通用的地图投影方式，将椭圆形地图投影成平面上的正文形，欲了解详情请baidu之，如无特殊说明本文所指均为Web墨卡托投影下。
+                </li>
+                <li><strong>Bounds(地图范围)：</strong>[ -20037508.3427892, -20037508.3427892, 20037508.3427892,
+                    20037508.3427892]，单位为米，20037508.3427892表示地图周长的一半，以地图中心点做为（0，0）坐标。
+                </li>
+                <li><strong>Levels：</strong>地图的级别，例如：0……22。</li>
+                <li><strong>Resolutions：</strong>分辨率数组，与级别相对应，即一个级别对应一个分辨率，分辨率表示当前级别下单个像素代表的地理长度。</li>
+            </ul>
+            <div>
+                <pre>Resolutions[n] = 20037508.3427892 * 2 / 256 / (2^n)</pre>
+            </div>
+            <ul>
+                <li><strong>Center：</strong>地图显示中心点。</li>
+                <li><strong>Level：</strong>地图显示级别。</li>
+                <li><strong>viewSize：</strong>地图控件窗口的大小。</li>
+            </ul>
+            <p>根据已知地图中心点、显示级别可以将地图显示范围计算出来:</p>
+
+            <div>
+                <pre>viewBounds = [Center.x - Resolutions[l]*viewSize.width/2, Center.y - Resolutions[l]*viewSize.height/2, Center.x + Resolutions[l].viewSize.width/w, Center.y + Resolutions[l].viewSize.height/h]</pre>
+            </div>
+            <p><strong>地图切图方式：</strong></p>
+
+            <p>一幅地图由4^n个256的正方形组成，n为级别</p>
+
+            <p>例如：第0级为4^0个，即世界地图由一个256图片表示。</p>
+
+            <p><a href="http://www.map163.com/wp-content/uploads/2013/03/lyrsm@.png"><img
+                    class="alignnone size-full wp-image-422" alt="lyrs=m@"
+                    src="http://www.map163.com/wp-content/uploads/2013/03/lyrsm@.png" width="256" height="256"/></a></p>
+
+            <p>第1级世界地图应由4^1（4）个256图片组成，也就是将世界地图（上一级的单个图片）等分成4块256图片。</p>
+
+            <p>往下每一级依此类推……</p>
+
+            <p>&nbsp;</p>
+
+            <p><strong>拼图算法剖析：</strong></p>
+
+            <p><strong>　1、计算瓦片url</strong></p>
+
+            <p>要想出图就发须知道地图控件可视范围起始点瓦片索引、末尾瓦片索引，中间区域的瓦片索引循环遍历即可得出。</p>
+
+            <p>下面看看如果计算出起始点、末尾瓦片url索引：</p>
+
+            <p>已知：l(缩放级别)、bounds(地图范围——[ -20037508.3427892, -20037508.3427892, 20037508.3427892,
+                20037508.3427892])、viewBounds(地图控件可视范围)、分辨率（Resolutions[l]）、瓦片像素宽高（256）。</p>
+
+            <p>未知：startX（视图起始瓦片X方向索引）、startY（视图起始瓦片Y方向索引）、endX（视图未尾瓦片x方向索引）、endY（视图未尾瓦片y方向索引）。</p>
+
+            <p>求解：</p>
+
+            <div>
+<pre>startX = floor(((viewBounds.leftBottom.x - bounds.leftBottom.x) / Resolutions[l]) / 256);
+startY = floor(((viewBounds.leftBottom.y - bounds.leftBottom.y) / Resolutions[l]) / 256);
+endX = floor(((viewBounds.rightTop.x - bounds.rightTop.x) / Resolutions[l]) / 256);
+endY = floor(((viewBounds.rightTop.y - bounds.rightTop.y) / Resolutions[l]) / 256);</pre>
+            </div>
+            <p>firstTileUrl(起始瓦片Url) = http://**********?x=startX&amp;y=startY&amp;z=l;</p>
+
+            <p>endTileUrl(末尾瓦片Url) = http://**********?x=endX&amp;y=startY&amp;z=l;</p>
+
+            <p>中间部分的url循环遍历即可得出。</p>
+
+            <p>好啦！组成视图所有瓦片的url都已得出。下面就是要解决将这些瓦片放到哪的问题。</p>
+
+            <p><strong>　2、计算瓦片放在地图控件上的位置</strong></p>
+
+            <p>先分析一下：其实只要将起始位置的瓦片像素位置算出来就可以了，由于瓦片像素大小为256，后面的各瓦片位置也就明了了。</p>
+
+            <p>所以这里只探讨一下起始瓦片的像素位置。</p>
+
+            <p>已知：startX（视图起始瓦片X方向索引）、startY（视图起始瓦片Y方向索引）、分辨率（Resolutions[l]）、瓦片像素宽高（256）、bounds(地图范围——[
+                -20037508.3427892, -20037508.3427892, 20037508.3427892, 20037508.3427892])、viewBounds(地图控件可视范围)。</p>
+
+            <p>
+                未知：startTileX（起始瓦片左上角X方向地理坐标）、startTileY（起始瓦片左上角Y方向地理坐标）、distanceX（瓦片左边与地图控件左边相距的像素距离）、distanceY（瓦片上边与地图控件上边相距的像素距离）。</p>
+
+            <p>求解：</p>
+
+            <div>
+<pre>startTileX = bounds.leftBottom.x + (startX * 256 * Resolutions[l]);
+startTileY = bounds.rightTop.y - (startY * 256 * Resolutions[l]);
+distanceX = (viewBounds.leftBottom.x - startTileX) / Resolutions[l];
+distanceY = (startTileY - viewBounds.rightTop.y) / Resolutions[l]</pre>
+            </div>
+            <p>
+                公式不是最简，以方便理解，相信看官此时已经知道起始瓦片在地图控件中的摆放位置了——设地图控件起始像素位置为（0，0），那么此瓦片的像素的位置就是（-distanceX、-distanceY）。其它瓦片依据256像素宽高的关系依次而出。</p>
+
+            <p>&nbsp;</p>
+
+            <p>到此已经算出了各瓦片的url以及它们应该摆放的位置，准备工作已完成，直接帖图即可完成出图工作。</p>
+
+            <p>算法可应用于Google、Baidu、Yahoo、Bing等web墨卡托投影的地图瓦片。</p>
+
+            <div class="readmore">
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- 版权信息 -->
+    <div id="post_box">
+        <div class="authorbio">
+            <div class="author_pic">
+                <img alt='' src='http://1.gravatar.com/avatar/72119ec2881f3f409543f8cdcf5339f4?s=48&amp;d=&amp;r=G'
+                     class='avatar avatar-48 photo' height='48' width='48'/></div>
+            <div class="author_description">
+                <span>作者: <a href="http://www.map163.com/?author=3" title="由 minmin 发布" rel="author">minmin</a></span>
+                <!-- 如果需要显示作者描述，可以取消此处的屏蔽 -->
+            </div>
+        </div>
+        <div class="author_text">
+            该日志由 minmin 于2013年03月29日发表在<a href="http://www.map163.com/?cat=3" title="查看 GOOGLE地图软件 中的全部文章"
+                                          rel="category">GOOGLE地图软件</a>, <a href="http://www.map163.com/?cat=7"
+                                                                            title="查看 地图及位置有关的算法 中的全部文章" rel="category">地图及位置有关的算法</a>分类下，
+            <br/>
+            转载请注明: <a href="http://www.map163.com/?p=418" rel="bookmark" title="本文固定链接 http://www.map163.com/?p=418">Google瓦片地图算法解析</a><br/>
+            标签: <a href="http://www.map163.com/?tag=google-t" rel="tag">google</a>, <a
+                href="http://www.map163.com/?tag=map-2" rel="tag">Map</a>, <a
+                href="http://www.map163.com/?tag=%e7%ae%97%e6%b3%95%e8%a7%a3%e6%9e%90" rel="tag">算法解析</a></div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- 上下篇 -->
+    <div id="post_box">
+        【上一篇】<a href="http://www.map163.com/?p=429" rel="prev">普适GIS，平台开拓促发展</a><br/>
+        【下一篇】<a href="http://www.map163.com/?p=442" rel="next">读这本书的要求是——身临其境，The Silent History用LBS改造电子书的阅读体验</a>
+
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- related content -->
+    <div id="post_box_related">
+        <h3>您可能感兴趣的文章:</h3>
+        <ul>
+            <li><a href="http://www.map163.com/?p=683">六大3D视觉效果的城市建筑Google Map</a></li>
+
+            <li><a href="http://www.map163.com/?p=668">Google Map版《永不妥协》</a></li>
+
+            <li><a href="http://www.map163.com/?p=656">Motorville - 用Google Map所做的动画</a></li>
+
+            <li><a href="http://www.map163.com/?p=640">谷歌地球跟踪台湾国际超级马拉松大赛</a></li>
+
+            <li><a href="http://www.map163.com/?p=569">GIS坐标系统详解 </a></li>
+
+            <li><a href="http://www.map163.com/?p=521">OGC之路</a></li>
+
+            <li><a href="http://www.map163.com/?p=637">Google Map愚人节带你走进藏宝地图</a></li>
+
+            <li><a href="http://www.map163.com/?p=522">奥维互动地图浏览器：跨平台地图浏览器</a></li>
+
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="comments-template">
+        <!-- You can start editing here. -->
+        <!-- If comments are closed. -->
+        <p class="nocomments">Comments are closed.</p>
+    </div>
+</div>
+<div class="sidebar">
+    <ul>
+        <li id="categories-2" class="widget widget_categories"><h2 class="widgettitle">分类目录</h2>
+            <ul>
+                <li class="cat-item cat-item-70"><a href="http://www.map163.com/?cat=70"
+                                                    title="查看 GeoServer学习手记 下的所有文章">GeoServer学习手记</a>
+                </li>
+                <li class="cat-item cat-item-2"><a href="http://www.map163.com/?cat=2"
+                                                   title="常用的GIS软件及下载地址，使用手册等">GIS软件</a>
+                </li>
+                <li class="cat-item cat-item-3"><a href="http://www.map163.com/?cat=3"
+                                                   title="谷歌地图，分析，使用，开发等">GOOGLE地图软件</a>
+                </li>
+                <li class="cat-item cat-item-6"><a href="http://www.map163.com/?cat=6" title="LBS">LBS</a>
+                </li>
+                <li class="cat-item cat-item-4"><a href="http://www.map163.com/?cat=4"
+                                                   title="免费GIS的介绍，下载地址等">免费GIS软件</a>
+                </li>
+                <li class="cat-item cat-item-7"><a href="http://www.map163.com/?cat=7" title="搜集整理有用的算法，基本公式，开发包等。">地图及位置有关的算法</a>
+                </li>
+                <li class="cat-item cat-item-5"><a href="http://www.map163.com/?cat=5" title="开源GIS的下载地址，介绍，使用等。">开源GIS软件</a>
+                </li>
+                <li class="cat-item cat-item-1"><a href="http://www.map163.com/?cat=1"
+                                                   title="电子地图，数据格式，矢量数据，POI">电子地图</a>
+                </li>
+                <li class="cat-item cat-item-11"><a href="http://www.map163.com/?cat=11" title="搜集有趣的应用,开阔思路">酷应用</a>
+                </li>
+            </ul>
+        </li>
+        <li id="recent-posts-2" class="widget widget_recent_entries"><h2 class="widgettitle">近期文章</h2>
+            <ul>
+                <li>
+                    <a href="http://www.map163.com/?p=683" title="六大3D视觉效果的城市建筑Google Map">六大3D视觉效果的城市建筑Google Map</a>
+                </li>
+                <li>
+                    <a href="http://www.map163.com/?p=686" title="GeoServer学习手记（七）：Servlet及HTTP派发过程之四">GeoServer学习手记（七）：Servlet及HTTP派发过程之四</a>
+                </li>
+                <li>
+                    <a href="http://www.map163.com/?p=668" title="Google Map版《永不妥协》">Google Map版《永不妥协》</a>
+                </li>
+                <li>
+                    <a href="http://www.map163.com/?p=676" title="GeoServer学习手记（六）：Servlet及HTTP派发过程之三">GeoServer学习手记（六）：Servlet及HTTP派发过程之三</a>
+                </li>
+                <li>
+                    <a href="http://www.map163.com/?p=674" title="GeoServer学习手记（五）：Servlet及HTTP派发过程之二">GeoServer学习手记（五）：Servlet及HTTP派发过程之二</a>
+                </li>
+            </ul>
+        </li>
+        <li id="tag_cloud-2" class="widget widget_tag_cloud"><h2 class="widgettitle">标签</h2>
+
+            <div class="tagcloud"><a href='http://www.map163.com/?tag=3d' class='tag-link-19' title='1 个话题'
+                                     style='font-size: 8pt;'>3D</a>
+                <a href='http://www.map163.com/?tag=3d%e5%85%a8%e6%99%af' class='tag-link-16' title='1 个话题'
+                   style='font-size: 8pt;'>3D全景</a>
+                <a href='http://www.map163.com/?tag=api' class='tag-link-42' title='4 个话题'
+                   style='font-size: 13.045045045pt;'>APi</a>
+                <a href='http://www.map163.com/?tag=api%e5%9d%90%e6%a0%87%e7%b3%bb%e7%bb%9f%e6%af%94%e8%be%83'
+                   class='tag-link-41' title='1 个话题' style='font-size: 8pt;'>API坐标系统比较</a>
+                <a href='http://www.map163.com/?tag=app' class='tag-link-28' title='7 个话题'
+                   style='font-size: 15.5675675676pt;'>APP</a>
+                <a href='http://www.map163.com/?tag=bing' class='tag-link-39' title='1 个话题'
+                   style='font-size: 8pt;'>Bing</a>
+                <a href='http://www.map163.com/?tag=bing-maps' class='tag-link-38' title='1 个话题'
+                   style='font-size: 8pt;'>Bing Maps</a>
+                <a href='http://www.map163.com/?tag=geoserver' class='tag-link-72' title='7 个话题'
+                   style='font-size: 15.5675675676pt;'>GeoServer</a>
+                <a href='http://www.map163.com/?tag=gis-t' class='tag-link-9' title='25 个话题' style='font-size: 22pt;'>gis</a>
+                <a href='http://www.map163.com/?tag=gis%e5%bc%80%e6%ba%90%e8%bd%af%e4%bb%b6%e5%a4%a7%e5%85%a8'
+                   class='tag-link-21' title='12 个话题' style='font-size: 18.2162162162pt;'>GIS开源软件大全</a>
+                <a href='http://www.map163.com/?tag=gis%ef%bc%8c%e5%9c%b0%e7%90%86%e5%9d%90%e6%a0%87%ef%bc%8c%e5%b1%8f%e5%b9%95%e5%9d%90%e6%a0%87%ef%bc%8c%e8%bd%ac%e6%8d%a2%e6%96%b9%e6%b3%95'
+                   class='tag-link-56' title='3 个话题' style='font-size: 11.7837837838pt;'>gis，地理坐标，屏幕坐标，转换方法</a>
+                <a href='http://www.map163.com/?tag=google-t' class='tag-link-10' title='13 个话题'
+                   style='font-size: 18.7207207207pt;'>google</a>
+                <a href='http://www.map163.com/?tag=google%ef%bc%8cmap' class='tag-link-24' title='8 个话题'
+                   style='font-size: 16.1981981982pt;'>google，Map</a>
+                <a href='http://www.map163.com/?tag=gps' class='tag-link-36' title='5 个话题'
+                   style='font-size: 14.0540540541pt;'>GPS</a>
+                <a href='http://www.map163.com/?tag=icao' class='tag-link-47' title='1 个话题'
+                   style='font-size: 8pt;'>ICAO</a>
+                <a href='http://www.map163.com/?tag=ios' class='tag-link-29' title='6 个话题'
+                   style='font-size: 14.9369369369pt;'>iOS</a>
+                <a href='http://www.map163.com/?tag=ios6-0' class='tag-link-26' title='1 个话题' style='font-size: 8pt;'>ios6.0</a>
+                <a href='http://www.map163.com/?tag=iphone' class='tag-link-37' title='1 个话题' style='font-size: 8pt;'>iphone</a>
+                <a href='http://www.map163.com/?tag=js' class='tag-link-49' title='2 个话题'
+                   style='font-size: 10.2702702703pt;'>js</a>
+                <a href='http://www.map163.com/?tag=lbs-t' class='tag-link-8' title='19 个话题'
+                   style='font-size: 20.6126126126pt;'>lbs</a>
+                <a href='http://www.map163.com/?tag=map-2' class='tag-link-15' title='25 个话题' style='font-size: 22pt;'>Map</a>
+                <a href='http://www.map163.com/?tag=mapfia' class='tag-link-27' title='2 个话题'
+                   style='font-size: 10.2702702703pt;'>Mapfia</a>
+                <a href='http://www.map163.com/?tag=twist' class='tag-link-33' title='2 个话题'
+                   style='font-size: 10.2702702703pt;'>Twist</a>
+                <a href='http://www.map163.com/?tag=wifi' class='tag-link-35' title='1 个话题'
+                   style='font-size: 8pt;'>wifi</a>
+                <a href='http://www.map163.com/?tag=%e4%b8%8b%e8%bd%bd' class='tag-link-30' title='2 个话题'
+                   style='font-size: 10.2702702703pt;'>下载</a>
+                <a href='http://www.map163.com/?tag=%e4%ba%92%e8%81%94%e7%bd%91' class='tag-link-14' title='1 个话题'
+                   style='font-size: 8pt;'>互联网</a>
+                <a href='http://www.map163.com/?tag=%e4%bc%81%e4%b8%9a%e7%ae%a1%e7%90%86' class='tag-link-13'
+                   title='1 个话题' style='font-size: 8pt;'>企业管理</a>
+                <a href='http://www.map163.com/?tag=%e4%bd%8d%e7%bd%ae%e7%ae%97%e6%b3%95' class='tag-link-44'
+                   title='5 个话题' style='font-size: 14.0540540541pt;'>位置算法</a>
+                <a href='http://www.map163.com/?tag=%e5%9c%b0%e5%9b%bemap' class='tag-link-32' title='6 个话题'
+                   style='font-size: 14.9369369369pt;'>地图map</a>
+                <a href='http://www.map163.com/?tag=%e5%9d%90%e6%a0%87%e7%b3%bb%e7%bb%9f' class='tag-link-43'
+                   title='3 个话题' style='font-size: 11.7837837838pt;'>坐标系统</a>
+                <a href='http://www.map163.com/?tag=%e5%ae%89%e5%8d%93android' class='tag-link-31' title='4 个话题'
+                   style='font-size: 13.045045045pt;'>安卓Android</a>
+                <a href='http://www.map163.com/?tag=%e5%ae%a4%e5%86%85%e5%ae%9a%e4%bd%8d' class='tag-link-34'
+                   title='1 个话题' style='font-size: 8pt;'>室内定位</a>
+                <a href='http://www.map163.com/?tag=%e5%b9%b3%e5%8f%b0' class='tag-link-22' title='1 个话题'
+                   style='font-size: 8pt;'>平台</a>
+                <a href='http://www.map163.com/?tag=%e5%bc%80%e5%8f%91' class='tag-link-48' title='6 个话题'
+                   style='font-size: 14.9369369369pt;'>开发</a>
+                <a href='http://www.map163.com/?tag=%e5%bc%80%e6%ba%90gis%e8%bd%af%e4%bb%b6' class='tag-link-20'
+                   title='6 个话题' style='font-size: 14.9369369369pt;'>开源GIS软件</a>
+                <a href='http://www.map163.com/?tag=%e6%95%b0%e6%8d%ae%e5%ba%93' class='tag-link-23' title='3 个话题'
+                   style='font-size: 11.7837837838pt;'>数据库</a>
+                <a href='http://www.map163.com/?tag=%e6%9c%ba%e5%9c%ba%e4%bb%a3%e7%a0%81' class='tag-link-46'
+                   title='1 个话题' style='font-size: 8pt;'>机场代码</a>
+                <a href='http://www.map163.com/?tag=%e7%81%ab%e6%98%9f%e5%9d%90%e6%a0%87' class='tag-link-40'
+                   title='4 个话题' style='font-size: 13.045045045pt;'>火星坐标</a>
+                <a href='http://www.map163.com/?tag=%e7%94%b5%e5%ad%90%e5%9c%b0%e5%9b%be' class='tag-link-17'
+                   title='2 个话题' style='font-size: 10.2702702703pt;'>电子地图</a>
+                <a href='http://www.map163.com/?tag=%e7%99%be%e5%ba%a6' class='tag-link-45' title='1 个话题'
+                   style='font-size: 8pt;'>百度</a>
+                <a href='http://www.map163.com/?tag=alg-t' class='tag-link-12' title='5 个话题'
+                   style='font-size: 14.0540540541pt;'>算法</a>
+                <a href='http://www.map163.com/?tag=%e7%bb%8f%e7%ba%ac%e5%ba%a6' class='tag-link-52' title='2 个话题'
+                   style='font-size: 10.2702702703pt;'>经纬度</a>
+                <a href='http://www.map163.com/?tag=%e8%8b%b9%e6%9e%9c' class='tag-link-25' title='2 个话题'
+                   style='font-size: 10.2702702703pt;'>苹果</a>
+                <a href='http://www.map163.com/?tag=%e8%b7%9d%e7%a6%bb' class='tag-link-53' title='2 个话题'
+                   style='font-size: 10.2702702703pt;'>距离</a>
+                <a href='http://www.map163.com/?tag=%e9%85%b7%e5%ba%94%e7%94%a8' class='tag-link-66' title='8 个话题'
+                   style='font-size: 16.1981981982pt;'>酷应用</a></div>
+        </li>
+        <li id="recent-comments-2" class="widget widget_recent_comments"><h2 class="widgettitle">近期评论</h2>
+            <ul id="recentcomments">
+                <li class="recentcomments"><a href='http://wordpress.org/' rel='external nofollow' class='url'>WordPress
+                    先生</a> 发表在《<a href="http://www.map163.com/?p=1#comment-1">OpenStreetMap数据下载地址</a>》
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</div>
+<div id="footer">
+    <p>
+        Copyright &copy; 2013 <a target="_blank" href="http://www.map163.com/">电子地图-GIS软件-LBS-基本算法相关资料</a>.
+        Powered by <a target="_blank" href="http://www.map163.com/">map163</a>.
+        <script src="http://s17.cnzz.com/stat.php?id=5151270&web_id=5151270" language="JavaScript"></script>
+    </p>
+</div>
+<script type='text/javascript' src='http://www.map163.com/wp-includes/js/admin-bar.min.js?ver=3.5.1'></script>
+<script type="text/javascript">
+    (function () {
+        var request, b = document.body, c = 'className', cs = 'customize-support', rcs = new RegExp('(^|\\s+)(no-)?' + cs + '(\\s+|$)');
+
+        request = true;
+
+        b[c] = b[c].replace(rcs, ' ');
+        b[c] += ( window.postMessage && request ? ' ' : ' no-' ) + cs;
+    }());
+</script>
+<div id="wpadminbar" class="nojq nojs" role="navigation">
+    <a class="screen-reader-shortcut" href="#wp-toolbar" tabindex="1">跳至工具栏</a>
+
+    <div class="quicklinks" id="wp-toolbar" role="navigation" aria-label="顶部导航工具栏。" tabindex="0">
+        <ul id="wp-admin-bar-root-default" class="ab-top-menu">
+            <li id="wp-admin-bar-wp-logo" class="menupop"><a class="ab-item" aria-haspopup="true"
+                                                             href="http://www.map163.com/wp-admin/about.php"
+                                                             title="关于 WordPress"><span class="ab-icon"></span></a>
+
+                <div class="ab-sub-wrapper">
+                    <ul id="wp-admin-bar-wp-logo-default" class="ab-submenu">
+                        <li id="wp-admin-bar-about"><a class="ab-item" href="http://www.map163.com/wp-admin/about.php">关于
+                            WordPress</a></li>
+                    </ul>
+                    <ul id="wp-admin-bar-wp-logo-external" class="ab-sub-secondary ab-submenu">
+                        <li id="wp-admin-bar-wporg"><a class="ab-item" href="http://cn.wordpress.org/">WordPress.org</a>
+                        </li>
+                        <li id="wp-admin-bar-documentation"><a class="ab-item"
+                                                               href="http://codex.wordpress.org/zh-cn:Main_Page">文档</a>
+                        </li>
+                        <li id="wp-admin-bar-support-forums"><a class="ab-item"
+                                                                href="http://zh-cn.forums.wordpress.org/">支持论坛</a></li>
+                        <li id="wp-admin-bar-feedback"><a class="ab-item"
+                                                          href="http://zh-cn.forums.wordpress.org/forum/suggestions">反馈</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li id="wp-admin-bar-site-name" class="menupop"><a class="ab-item" aria-haspopup="true"
+                                                               href="http://www.map163.com/wp-admin/">电子地图-GIS软件-LBS-基本算法相关资料</a>
+
+                <div class="ab-sub-wrapper">
+                    <ul id="wp-admin-bar-site-name-default" class="ab-submenu">
+                        <li id="wp-admin-bar-dashboard"><a class="ab-item"
+                                                           href="http://www.map163.com/wp-admin/">仪表盘</a></li>
+                    </ul>
+                    <ul id="wp-admin-bar-appearance" class="ab-submenu">
+                        <li id="wp-admin-bar-themes"><a class="ab-item"
+                                                        href="http://www.map163.com/wp-admin/themes.php">主题</a></li>
+                        <li id="wp-admin-bar-customize" class="hide-if-no-customize"><a class="ab-item"
+                                                                                        href="http://www.map163.com/wp-admin/customize.php?url=http%3A%2F%2Fwww.map163.com%2F%3Fp%3D418">自定义</a>
+                        </li>
+                        <li id="wp-admin-bar-widgets"><a class="ab-item"
+                                                         href="http://www.map163.com/wp-admin/widgets.php">小工具</a></li>
+                        <li id="wp-admin-bar-menus"><a class="ab-item"
+                                                       href="http://www.map163.com/wp-admin/nav-menus.php">菜单</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li id="wp-admin-bar-comments"><a class="ab-item" href="http://www.map163.com/wp-admin/edit-comments.php"
+                                              title="10 条评论待审"><span class="ab-icon"></span><span id="ab-awaiting-mod"
+                                                                                                  class="ab-label awaiting-mod pending-count count-10">10</span></a>
+            </li>
+            <li id="wp-admin-bar-new-content" class="menupop"><a class="ab-item" aria-haspopup="true"
+                                                                 href="http://www.map163.com/wp-admin/post-new.php"
+                                                                 title="添加"><span class="ab-icon"></span><span
+                    class="ab-label">新建</span></a>
+
+                <div class="ab-sub-wrapper">
+                    <ul id="wp-admin-bar-new-content-default" class="ab-submenu">
+                        <li id="wp-admin-bar-new-post"><a class="ab-item"
+                                                          href="http://www.map163.com/wp-admin/post-new.php">文章</a></li>
+                        <li id="wp-admin-bar-new-media"><a class="ab-item"
+                                                           href="http://www.map163.com/wp-admin/media-new.php">媒体</a>
+                        </li>
+                        <li id="wp-admin-bar-new-page"><a class="ab-item"
+                                                          href="http://www.map163.com/wp-admin/post-new.php?post_type=page">页面</a>
+                        </li>
+                        <li id="wp-admin-bar-new-user"><a class="ab-item"
+                                                          href="http://www.map163.com/wp-admin/user-new.php">用户</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li id="wp-admin-bar-edit"><a class="ab-item"
+                                          href="http://www.map163.com/wp-admin/post.php?post=418&#038;action=edit">编辑文章</a>
+            </li>
+        </ul>
+        <ul id="wp-admin-bar-top-secondary" class="ab-top-secondary ab-top-menu">
+            <li id="wp-admin-bar-search" class="admin-bar-search">
+                <div class="ab-item ab-empty-item" tabindex="-1">
+                    <form action="http://www.map163.com/" method="get" id="adminbarsearch"><input class="adminbar-input"
+                                                                                                  name="s"
+                                                                                                  id="adminbar-search"
+                                                                                                  type="text" value=""
+                                                                                                  maxlength="150"/><input
+                            type="submit" class="adminbar-button" value="搜索"/></form>
+                </div>
+            </li>
+            <li id="wp-admin-bar-my-account" class="menupop with-avatar"><a class="ab-item" aria-haspopup="true"
+                                                                            href="http://www.map163.com/wp-admin/profile.php"
+                                                                            title="我的帐户">您好，minmin<img alt=''
+                                                                                                       src='http://1.gravatar.com/avatar/72119ec2881f3f409543f8cdcf5339f4?s=16&amp;d=&amp;r=G'
+                                                                                                       class='avatar avatar-16 photo'
+                                                                                                       height='16'
+                                                                                                       width='16'/></a>
+
+                <div class="ab-sub-wrapper">
+                    <ul id="wp-admin-bar-user-actions" class="ab-submenu">
+                        <li id="wp-admin-bar-user-info"><a class="ab-item" tabindex="-1"
+                                                           href="http://www.map163.com/wp-admin/profile.php"><img alt=''
+                                                                                                                  src='http://1.gravatar.com/avatar/72119ec2881f3f409543f8cdcf5339f4?s=64&amp;d=&amp;r=G'
+                                                                                                                  class='avatar avatar-64 photo'
+                                                                                                                  height='64'
+                                                                                                                  width='64'/><span
+                                class='display-name'>minmin</span></a></li>
+                        <li id="wp-admin-bar-edit-profile"><a class="ab-item"
+                                                              href="http://www.map163.com/wp-admin/profile.php">编辑我的个人资料</a>
+                        </li>
+                        <li id="wp-admin-bar-logout"><a class="ab-item"
+                                                        href="http://www.map163.com/wp-login.php?action=logout&#038;_wpnonce=4c24191cda">登出</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <a class="screen-reader-shortcut" href="http://www.map163.com/wp-login.php?action=logout&#038;_wpnonce=4c24191cda">登出</a>
+</div>
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=slide&img=0&pos=right&uid="></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    var bds_config = {"bdTop":150};
+    document.getElementById("bdshell_js").src = "http://share.baidu.com/static/js/shell_v2.js?cdnversion=" + new Date().getHours();
+</script>
+<!-- Baidu Button END -->
+</body>
+</html>

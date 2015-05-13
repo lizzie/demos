@@ -1,0 +1,17 @@
+{
+  "name": "glod-price-trend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "show": "node --harmony index.js"
+  },
+  "author": "Liz",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.1.0",
+    "commander": "^2.8.1",
+    "node-notifier": "^4.2.1",
+    "request": "^2.55.0"
+  }
+}

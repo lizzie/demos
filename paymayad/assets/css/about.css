@@ -1,0 +1,173 @@
+@font-face {
+    font-family: 'Cinzel Decorative';
+    font-style: normal;
+    font-weight: 400;
+    src: local('CinzelDecorative-Regular'), url(http://themes.googleusercontent.com/static/fonts/cinzeldecorative/v1/fmgK7oaJJIXAkhd9798yQoem3WQP60SwtMX1R01QT0U.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Cinzel Decorative';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Cinzel Decorative Bold'), local('CinzelDecorative-Bold'), url(http://themes.googleusercontent.com/static/fonts/cinzeldecorative/v1/pXhIVnhFtL_B9Vb1wq2F94D0o2BE24rSRm105apHkdL3rGVtsTkPsbDajuO5ueQw.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Fredericka the Great';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Fredericka the Great'), local('FrederickatheGreat'), url(http://themes.googleusercontent.com/static/fonts/frederickathegreat/v2/7Es8Lxoku-e5eOZWpxw18uNtPus5Q24fzFZQPskWbXv3rGVtsTkPsbDajuO5ueQw.woff) format('woff');
+}
+
+body {
+    background: #333 url(http://pic.paymapad.com/img/zoomr_bg.gif);
+    color: #888;
+    font-size: 16px;
+    font-family: "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
+}
+
+a {
+    color: #aaa;
+}
+
+a:hover {
+    color: #ccc;
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+.fn-clear:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0
+}
+
+.fn-clear {
+    zoom: 1
+}
+
+#header, #footer {
+    padding: 500px 0;
+    text-align: center;
+}
+
+#header #title {
+    font-family: 'Fredericka the Great', cursive;
+    font-size: 72px;
+    color: #aaa;
+}
+
+#header #title strong {
+    font-family: 'Cinzel Decorative', cursive;
+    font-weight: 400;
+    color: #cdcdcd;
+}
+
+#header #sub-title {
+    width: 50%;
+    margin: 0 auto;
+}
+
+#more, #top {
+    display: inline-block;
+    font-family: 'Fredericka the Great', cursive;
+    font-size: 72px;
+
+    transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+}
+
+.section {
+    padding: 60px 40px;
+    color: white;
+    color: rgba(255, 255, 255, .8);
+    *color: #ddd;
+}
+
+.section h2 {
+    margin: 0 0 80px;
+    font-size: 58px;
+}
+
+.sec-even h2 {
+    text-align: right;
+}
+
+.section .details {
+    text-align: center;
+
+}
+
+.section .details h3 {
+    padding-bottom: 30px;
+    font-size: 28px;
+    color: #333;
+    font-family: 'Fredericka the Great', cursive;
+}
+
+.section .details .line {
+    padding-top: 20px;
+    margin-bottom: 10px;
+    line-height: 2;
+}
+
+.section .details .line strong {
+    color: #666;
+}
+
+.section .details .img {
+    margin: 0 20px;
+}
+
+.section .details .img img {
+    max-width: 680px;
+}
+
+#what {
+    background: #439bb5;
+}
+
+#how {
+    background: #db6767;
+
+}
+
+#how .details {
+    text-align: left;
+    background: #fefcf5;
+    border-bottom: 4px dashed #ddd;
+    padding: 60px 40px;
+    color: #999;
+}
+
+#how .details .right {
+    float: right;
+}
+
+#how .details .left {
+    float: left;
+}
+
+#try {
+    background: #033d5d;
+}
+
+#us {
+    background: #68c39f;
+}
+
+#us .details a {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    vertical-align: middle;
+    margin-right: 20px;
+}

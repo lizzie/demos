@@ -1,0 +1,10 @@
+{ "indexes":[
+    {
+        "v":1,
+        "key":{
+            "_id":1
+        },
+        "ns":"paymapad.places",
+        "name":"_id_"
+    }
+] }

@@ -1,0 +1,32 @@
+{% extends 'common/layout.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="login">
+  <form class="login-box form" action="#">
+    <h2>Your Account</h2>
+
+    <div class="item username">
+      <label class="icon" for="username"></label>
+      <input placeholder="Username" type="text" name="username" id="username"/>
+    </div>
+    <div class="item password">
+      <label class="icon" for="password"></label>
+      <input placeholder="Password" type="password" name="password" id="password"/>
+    </div>
+    <div class="extra">
+      <label>
+        <input type="checkbox" checked/> Remember me
+      </label>
+
+      <a href="#" class="fn-right font-green">Forgot password?</a>
+    </div>
+    <div class="action">
+      <button class="btn">Sign In</button>
+    </div>
+  </form>
+  <div class="login-img">
+    <img src="/imgs/tim.jpg" alt="tim"/>
+  </div>
+</div>
+{% endblock %}

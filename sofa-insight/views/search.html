@@ -1,0 +1,105 @@
+<%- include include/header.html %>
+
+<div class="sf-main row-fluid">
+  <%- include include/sidebar.html %>
+
+  <div class="span10 sf-content" id="J_content">
+    <%- include include/time.html %>
+
+    <h3>搜索与比较</h3>
+
+    <div id="overview-chart" class="sf-block"></div>
+    <div class="sf-block" style="display: none;">
+      <h4>trace 列表</h4>
+
+      <div class="sf-block-limited">
+        <table id="overview-trace" class="table table-striped table-bordered table-hover">
+          <thead>
+          <tr>
+            <th class="sf-checkbox"></th>
+            <th style="width: 20%;">时间</th>
+            <th style="width: 20%;">ID</th>
+            <th>入口名称</th>
+            <th style="width: 20%;">耗时</th>
+          </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        <script id="overview-trace-template" type="text/x-handlebars-template">
+          {{#each trace_list }}
+          <tr class="J_show_trace_tree" data-id="{{ ID }}">
+            <td class="sf-checkbox"><a href="#" class="J_checkbox"><i class="icon-check-empty"></i></a></td>
+            <td>{{ datetime }}</td>
+            <td>{{ ID }}</td>
+            <td>{{ entrance_name }}</td>
+            <td>{{ time }}</td>
+          </tr>
+          {{/each}}
+        </script>
+
+      </div>
+      <div class="btn-group">
+        <button class="btn" id="J_empty_checkbox">清空选择</button>
+        <button class="btn" id="J_compare">查看对比</button>
+      </div>
+    </div>
+    <div class="sf-block sf-block-limited" style="display: none;">
+      <h4>2个trace对比查看区域</h4>
+      <table id="overview-a-trace" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>Trace</th>
+          <th style="width: 300px;">Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      <script id="overview-a-trace-template" type="text/x-handlebars-template">
+        {{#each trace_data }}
+        <tr data-tt-id="{{ id }}" data-tt-parent-id="{{ parent_id }}">
+          <td><a href="#" class="J_show_a_trace_detail">{{ url }}</a></td>
+          <td>
+            {{#if type }}
+            <div class="progress sf-progress">
+              <div class="bar bar-{{ type }}" style="width: {{ percent }}%;" title="{{ time }}ms"></div>
+            </div>
+            {{else}}
+            <div class="sf-progress-wrap">
+              {{#if both }}
+              {{#each percent }}
+              <div class="progress sf-progress sf-progress-{{@index}}">
+                <div class="bar bar-success" style="width: {{ this }}%;"></div>
+              </div>
+              {{/each}}
+              {{/if}}
+              {{#if gt }}
+              <div class="progress sf-progress sf-progress-0">
+                <div class="bar bar-info" style="width: {{ percent }}%;"></div>
+              </div>
+              {{/if}}
+              {{#if lt }}
+              <div class="progress sf-progress sf-progress-1">
+                <div class="bar bar-warning" style="width: {{ percent }}%;"></div>
+              </div>
+              {{/if}}
+            </div>
+            {{/if}}
+          </td>
+        </tr>
+        {{/each}}
+      </script>
+      <script id="overview-a-trace-detail-template" type="text/x-handlebars-template">
+        <div style="margin-left: {{ space }}px;" class="sf-trace-detail">
+          {{#each trace_detail }}
+          <span>{{ id }}</span><span>{{ url }}</span><span>{{ time }}ms</span><span>等等其他数据字段</span><br/>
+          {{/each}}
+        </div>
+      </script>
+    </div>
+
+    <%- include include/loading.html %>
+  </div>
+</div>
+<%- include include/footer.html %>

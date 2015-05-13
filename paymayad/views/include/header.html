@@ -1,0 +1,37 @@
+<header class="row-fluid">
+    <div class="span5">
+        <!--<a href="/" id="logo"><img
+                src="<%= config.imgRoot %>/logo.png" alt=""
+                style="height: 80px; width: 80px;"/></a>-->
+        <span id="title" style="margin-left: 20px">PAYMAP AD</span>
+        <span id="sub-title"><%= title %></span>
+        <img src="<%= config.imgRoot %>/beta.png" alt="beta" style="position:relative;top: -20px; left: -10px;"/>
+    </div>
+    <% if (nav) { %>
+    <nav class="span7" id="J_nav">
+        <a href="/" id="J_nav_home" <% if (nav === "home") { %> class="active" <% } %>>Home</a>
+        <!--<a id="J_nav_publish" <% if (nav === "dashboard") { %> href="#!/new" <% } else {%> href="/dashboard/#!/new" <% }
+        %>>Publish</a>-->
+        <a id="J_nav_dashboard" <% if (nav === "dashboard") { %> href="#!/" <% } else { %> href="/dashboard/" <% } %>
+        >Dashboard</a>
+        <a href="/view" id="J_nav_view" <% if (nav === "view") { %> class="active" <% } %>>View</a>
+        <a href="/about" id="J_nav_about" <% if (nav === "about") { %> class="active" <% } %>>About</a>
+    </nav>
+    <% } %>
+    <div class="bl"></div>
+    <div class="br"></div>
+</header>
+
+<% if (!isLogin) { %>
+<div id="auth">
+    <a href="/login"><i class="icon-ok"></i> Login </a><a href="/register"><i class="icon-user"></i> SignUp </a>
+    <!--<a href="/auth/google"><i class="icon-ok"></i> Google </a><a href="/auth/sina"><i class="icon-user"></i> Weibo </a>
+    <div id="gplus-btn" class="hide">
+        <div></div>
+    </div>-->
+</div>
+<% } %>
+<div id="message" class="hide">
+    <div>内容</div>
+    <button class="close">&times;</button>
+</div>

@@ -1,0 +1,13 @@
+{
+    "name": "fetch",
+    "version": "0.0.1",
+    "description": "",
+    "homepage": "",
+    "engines": {
+        "node": ">= 0.8.17"
+    },
+    "dependencies": {
+        "async": "*",
+        "entities": "*"
+    }
+}

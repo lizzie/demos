@@ -1,0 +1,451 @@
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans);
+
+.clear-fix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clear-fix {
+    display: inline-block;
+}
+
+/* Hides from IE-mac \*/
+* html .clear-fix {
+    height: 1%;
+}
+
+.clear-fix {
+    display: block;
+}
+
+/* End hide from IE-mac */
+a:hover {
+    text-decoration: none;
+}
+
+body.fullscreen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+header {
+    position: relative;
+    height: 100px;
+    line-height: 100px;
+    z-index: 10;
+}
+
+header #logo {
+    padding-left: 20px;
+}
+
+header #title {
+    color: #999;
+    font-size: 26px;
+}
+
+header #sub-title {
+    color: #bbb;
+    font-size: 20px;
+    margin-left: 10px;
+    font-family: 'Josefin Sans', cursive;
+}
+
+header nav a {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 20%;
+    margin-right: 3%;
+    height: 40px;
+    margin-right: 20px;
+    line-height: 40px;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 4px;
+}
+
+header nav a:hover {
+    background: #eee;
+}
+
+header nav a.active {
+    color: #fff;
+    background: #8a8acb;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 5px;
+}
+
+header nav a.active:hover {
+    background: #bd93e5;
+}
+
+header .bl,
+header .br {
+    position: absolute;
+    height: 24px;
+    width: 600px;
+    bottom: -24px;
+    background: transparent url(http://pic.paymapad.com/img/shadow.png) left top no-repeat;
+}
+
+header .bl {
+    left: 0;
+}
+
+header .br {
+    right: 0;
+    background-position: right top;
+}
+
+#auth {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 12;
+}
+
+#auth a {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    color: #999;
+    width: 100px;
+    margin-right: 1px;
+    background: #f8f8f8;
+    height: 24px;
+    line-height: 24px;
+    font-size: 12px;
+    text-align: center;
+}
+
+#auth > a:last-child {
+    margin-right: 0;
+}
+
+#auth #gplus-btn {
+    margin: 4px 2px 0 0;
+}
+
+#message {
+    position: fixed;
+    _position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    z-index: 110;
+    background: #aaa;
+    background: rgba(170, 170, 170, 0.9);
+}
+
+#message.success {
+    background: #b4d478;
+    background: rgba(180, 212, 120, 0.9);
+}
+
+#message.error {
+    background-color: #e66;
+    background-color: rgba(238, 100, 100, 0.9);
+}
+
+#message .close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+footer {
+    height: 80px;
+    line-height: 80px;
+    background-color: #3c4e5a;
+    text-align: center;
+    color: #ccc;
+}
+
+footer a:hover {
+    color: #ccc;
+}
+
+.page {
+    padding-top: 50px;
+    display: none;
+}
+
+#dashboard #side {
+    padding-left: 30px;
+}
+
+#dashboard #side .btn {
+    margin-bottom: 20px;
+}
+
+#dashboard #side .viewer a {
+    text-transform: uppercase;
+}
+
+#editor {
+    position: absolute;
+    left: 0;
+    top: 100px;
+    right: 0;
+    bottom: 0;
+}
+
+#editor #toolbar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 30%;
+    background: white;
+    overflow: auto;
+}
+
+#editor #toolbar .panel .actions {
+    padding: 20px;
+    text-align: center;
+    background: #f8f8f8;
+}
+
+#editor #toolbar .panel .actions .btn {
+    padding: 8px 40px;
+    text-transform: uppercase;
+}
+
+#editor #toolbar .panel .nav-box {
+    display: box;
+    display: -webkit-box;
+    display: -moz-box;
+    border-top: 1px solid #eee;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+#editor #toolbar .panel .nav-box li {
+    box-flex: 1;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+#editor #toolbar .panel .nav-box li a {
+    padding: 10px 0;
+    background: #f8f8f8;
+    color: #999;
+}
+
+#editor #toolbar .panel .nav-box li a:hover {
+    color: #666;
+}
+
+#editor #toolbar .panel .nav-box li.active {
+    border-bottom: none;
+}
+
+#editor #toolbar .panel .nav-box li.active a,
+#editor #toolbar .panel .nav-box li.active a:hover {
+    color: #666;
+    background: white;
+}
+
+#editor #toolbar .panel .nav-box li.disabled a,
+#editor #toolbar .panel .nav-box li.disabled a:hover {
+    color: #ccc;
+}
+
+#editor #toolbar .panel .tab-content {
+    padding: 20px;
+}
+
+#editor #toolbar .panel .tab-content .form-horizontal label {
+    width: 100px;
+}
+
+#editor #toolbar .panel .tab-content .form-horizontal .controls {
+    margin-left: 120px;
+}
+
+#editor #toolbar .panel .tab-content .upload_pic_wrap {
+    height: 140px;
+}
+
+#editor #toolbar .panel .tab-content .upload_pic_wrap textarea {
+    visibility: hidden;
+    width: 180px;
+}
+
+#editor #toolbar .panel .tab-content .upload_pic_wrap .show-desc textarea {
+    visibility: visible;
+}
+
+#editor #toolbar .panel .tab-content .upload_pic_wrap img {
+    margin: 0 4px 4px 0;
+}
+
+#editor #toolbar .panel .tab-content .upload_pic_wrap label.radio {
+    padding-top: 0;
+}
+
+#editor #toolbar .panel .tab-content .btn-group .btn {
+    text-transform: uppercase;
+}
+
+#editor #toolbar .panel .tab-content .label {
+    padding: 4px 8px;
+    margin-bottom: 4px;
+}
+
+#editor #toolbar .panel .tab-content .label i {
+    margin-left: 6px;
+}
+
+#editor #playground {
+    left: 30%;
+    top: 0;
+}
+
+#playground {
+    position: absolute;
+    left: 0;
+    top: 100px;
+    right: 0;
+    bottom: 0;
+    background: #cccccc url(http://pic.paymapad.com/img/loading.gif) no-repeat center center;
+}
+
+#playground .maps {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    visibility: hidden;
+}
+
+#playground img {
+    max-width: none;
+}
+
+#map {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+    background: #dedede;
+}
+
+#auth-body,
+#notfound {
+    position: absolute;
+    left: 0;
+    top: 100px;
+    right: 0;
+    bottom: 0;
+    background: #7fb5e5 url(http://pic.paymapad.com/img/splash_1.jpg) center center no-repeat;
+}
+
+#auth-body .content,
+#notfound .content {
+    position: absolute;
+    width: 500px;
+    height: 300px;
+    top: 50%;
+    left: 50%;
+    margin-left: -250px;
+    margin-top: -150px;
+    background: white;
+}
+
+#auth-body .content form,
+#notfound .content form {
+    margin: 40px 0;
+}
+
+#notfound .content {
+    background: transparent;
+}
+
+#notfound .content h2 {
+    font-family: 'Josefin Sans', cursive;
+    font-size: 120px;
+    font-weight: 100;
+    color: white;
+}
+
+#notfound .content #enter {
+    display: block;
+    padding-left: 50px;
+    margin-top: 30px;
+    font-family: 'Josefin Sans', cursive;
+    font-size: 20px;
+    color: white;
+    font-style: italic;
+    text-shadow: 1px 0px 2px #333;
+}
+
+.ad-info-window {
+    width: 320px;
+    height: 240px;
+    overflow: hidden;
+}
+
+.ad-info-window td {
+    vertical-align: top;
+}
+
+.ad-info-window img {
+    width: 240px;
+    height: 240px;
+}
+
+.ad-info-window-2 {
+    width: 240px;
+    height: 180px;
+}
+
+.ad-info-window-2 img {
+    width: 180px;
+    height: 180px;
+}
+
+#loading {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 32px;
+    height: 32px;
+    margin-left: -16px;
+    margin-top: -16px;
+    z-index: 100;
+}
+
+#login-box form {
+    margin: 0;
+}
+
+body.home header,
+body.home #message {
+    height: 140px;
+    line-height: 140px;
+}
+
+body.home #editor,
+body.home #playground,
+body.home #auth-body {
+    top: 140px;
+}

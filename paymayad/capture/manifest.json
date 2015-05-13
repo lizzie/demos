@@ -1,0 +1,47 @@
+{
+    "manifest_version":2,
+
+    "name":"Capture Map",
+    "description":"Pay Map AD Capture Tool",
+    "version":"1.0",
+    "icons":{
+        "128":"img/icon_128.png",
+        "16":"img/icon_16.png",
+        "19":"img/icon_32.png",
+        "32":"img/icon_32.png",
+        "48":"img/icon_48.png"
+    },
+
+    "minimum_chrome_version":"18",
+    "permissions":[
+        "tabs", "*://www.paymapad.com/assets/capture.html*", "*://www.paymapad.com/capture*"
+    ],
+    "background":{
+        "page":"background.html",
+        "persistent":false
+    },
+    "content_scripts":[
+        {
+            "js":[ "jquery.js", "page.js" ],
+            "matches":[ "*://www.paymapad.com/assets/capture.html*", "*://www.paymapad.com/capture*" ],
+            "run_at":"document_end"
+        }
+    ],
+    "plugins":[
+        {
+            "path":"plugins/screen_capture.dll"
+        },
+        {
+            "path":"plugins/screen_capture.so"
+        },
+        {
+            "path":"plugins/screen_capture_64.so"
+        },
+        {
+            "path":"plugins/screen_captures.plugin"
+        }
+    ],
+    "web_accessible_resources":[
+        "img/loading.gif"
+    ]
+}

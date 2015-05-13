@@ -1,0 +1,27 @@
+{
+  "name": "paymapad",
+  "version": "1.0.0",
+  "description": "paymapad",
+  "homepage": "http://paymapad.com",
+  "keywords": [],
+  "author": "Liz <shengyan1985@gmail.com> ",
+  "engines": {
+    "node": ">= 0.8.1"
+  },
+  "dependencies": {
+    "express": "*",
+    "ejs": "*",
+    "mongoose": "*",
+    "mongoose-types": "*",
+    "http-proxy": "*",
+    "seajs": "*",
+    "crypto": "*",
+    "passport": "*"
+  },
+  "devDependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lizzie/paymapad.git"
+  }
+}

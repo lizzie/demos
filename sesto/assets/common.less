@@ -1,0 +1,104 @@
+@font-face {
+  font-family: "Signika";
+  src: url(/fonts/Signika-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Signika Semibold";
+  src: url(/fonts/Signika-Semibold.ttf);
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url(/fonts/OpenSans-Regular_0.ttf);
+}
+
+@font-face {
+  font-family: "Open Sans Light";
+  src: url(/fonts/OpenSans-Light.ttf);
+}
+
+body {
+  background: #ececec;
+}
+
+a {
+  text-decoration: none;
+}
+
+header {
+  background: #662583;
+  color: white;
+  height: 50px;
+
+  .inner {
+    position: relative;
+  }
+  h1 {
+    margin: 0;
+
+    img {
+      margin: 15px 15px 0 15px;
+      width: 20px;
+      height: 20px;
+    }
+    span {
+      font-family: "Signika";
+      font-size: 18px;
+      vertical-align: middle;
+    }
+  }
+
+  .menu {
+    display: block;
+    position: absolute;
+    top: 16px;
+    right: 0;
+    color: white;
+    background: #662583;
+    font-family: "Open Sans";
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .menu-list {
+    display: none;
+  }
+}
+
+footer {
+  height: 50px;
+  line-height: 50px;
+  background: #F1CD4A;
+  color: white;
+  text-align: center;
+
+  .links a {
+    display: inline-block;
+    width: 150px;
+    text-align: center;
+    color: white;
+    font-family: "Open Sans";
+    font-size: 14px;
+  }
+}
+
+.container, .inner {
+  width: 930px;
+  margin: 0 auto;
+}
+
+.fn-right {
+  float: right;
+}
+
+.font-green {
+  color: #009FE3;
+}
+
+.arrow-down {
+  display: inline-block;
+  border-top: 5px solid white;
+  border-left: 5px dashed transparent;
+  border-bottom: 2px dashed transparent;;
+  border-right: 5px dashed transparent;
+}

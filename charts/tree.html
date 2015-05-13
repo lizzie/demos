@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>tree</title>
+	<script src="http://static.jstree.com/v.1.0pre/jquery.js"></script>
+
+<script src="http://static.jstree.com/v.1.0pre/jquery.jstree.js"></script>
+
+<body>
+<div id="demo2" class="demo" style="height:100px;overflow: auto;">
+</div>
+
+<div id="demo3" class="demo" style="height:100px;">
+	<ul>
+		<li id="shtml_1" class="jstree-open">
+			<a href="#">Root node 1</a>
+			<ul>
+				<li id="shtml_2">
+					<a href="#">Child node 1</a>
+				</li>
+				<li id="shtml_3">
+					<a href="#">Child node 2</a>
+				</li>
+			</ul>
+		</li>
+		<li id="shtml_4">
+			<a href="#">Root node 2</a>
+		</li>
+	</ul>
+</div>
+
+<script>
+$(function () {
+	$("#demo3")
+		.jstree({ "plugins" : ["themes","html_data","ui"] })
+		// 1) if using the UI plugin bind to select_node
+		.bind("select_node.jstree", function (event, data) {
+			// `data.rslt.obj` is the jquery extended node that was clicked
+			data.rslt.obj.append('<div style="width: 100%; height:16px; background: graytext;margin-left:20px;"></div>');
+		})
+		// 2) if not using the UI plugin - the Anchor tags work as expected
+		//    so if the anchor has a HREF attirbute - the page will be changed
+		//    you can actually prevent the default, etc (normal jquery usage)
+		.delegate("a", "click", function (event, data) { event.preventDefault(); })
+
+
+
+    var data = [];
+    for (var i = 0; i<1000; i++) {
+        data.push({
+            metadata: { id: "pjson_" + i },
+            data: "Root node " + i,
+            children: [
+            { metadata: { id: "pjson_"+i+"1" }, data: "Child node 1" },
+            { metadata: { id: "pjson_"+i+"2" }, data: "Child node 2" },
+            { metadata: { id: "pjson_"+i+"3" }, data: "Some other child node" }
+        ] });
+    }
+    $("#demo2").jstree({
+        "plugins": ["themes","json_data","ui"],
+        "json_data": {
+            "data": data
+        }
+    });
+});
+</script>
+</body>
+</html>

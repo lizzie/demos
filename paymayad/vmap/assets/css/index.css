@@ -1,0 +1,130 @@
+.ks-hidden {
+  display: none;
+}
+.ks-invisible {
+  visibility: hidden;
+}
+.ks-clear:after {
+  content: '\20';
+  display: block;
+  height: 0;
+  clear: both;
+}
+.ks-clear {
+  *zoom: 1;
+}
+.ks-inline-block {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 68px;
+  width: 100%;
+  z-index: 1001;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 0, 0, 0.075);
+  background: #020031;
+  background: -moz-linear-gradient(45deg, #020031 0%, #6d3353 100%);
+  background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #020031), color-stop(100%, #6d3353));
+  background: -webkit-linear-gradient(45deg, #020031 0%, #6d3353 100%);
+  background: -o-linear-gradient(45deg, #020031 0%, #6d3353 100%);
+  background: -ms-linear-gradient(45deg, #020031 0%, #6d3353 100%);
+  background: linear-gradient(45deg, #020031 0%, #6d3353 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#020031', endColorstr='#6d3353',GradientType=1 );
+  -webkit-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+}
+header #logo {
+  float: left;
+  display: block;
+  width: 80px;
+  height: 68px;
+  line-height: 68px;
+  margin-right: 20px;
+  text-align: center;
+}
+header .form-search {
+  float: left;
+  height: 68px;
+  line-height: 68px;
+}
+#map {
+  width: 100%;
+  height: 100%;
+}
+#map img {
+  max-width: none;
+}
+.panel {
+  position: absolute;
+  top: 68px;
+  left: -340px;
+  width: 360px;
+  height: 100%;
+  z-index: 1000;
+  background: white;
+  border-right: 1px solid #efefef;
+  -webkit-box-shadow: -1px 0 7px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: -1px 0 7px rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: -1px 0 7px rgba(0, 0, 0, 0.2);
+  -o-box-shadow: -1px 0 7px rgba(0, 0, 0, 0.2);
+  box-shadow: -1px 0 7px rgba(0, 0, 0, 0.2);
+}
+.panel .panel-inner {
+  margin: 10px;
+  margin-bottom: 68px;
+  overflow: hidden;
+}
+.panel .close {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  height: 20px;
+  margin-top: -10px;
+  float: none;
+  position: absolute;
+  top: 50%;
+  right: 5px;
+}
+/* iPad 以下 小于(不等于) 960宽度的平板电脑*/
+@media (max-width: 959px) {
+  .panel {
+    width: 260px;
+  }
+}
+/* iPad竖版 以下 小于(不等于) 960宽度的平板电脑*/
+@media (min-width: 768px) and (max-width: 959px) {
+  .panel {
+    width: 260px;
+  }
+}
+/* iPhone 以下*/
+@media (max-width: 767px) {
+  .panel {
+    width: 160px;
+  }
+}
+/* iPhone 横版及某些平板竖版 */
+@media (min-width: 480px) and (max-width: 767px) {
+  .panel {
+    width: 260px;
+  }
+}
+/* iPhone 竖版 */
+@media (max-width: 479px) {
+  .panel {
+    width: 100px;
+  }
+}

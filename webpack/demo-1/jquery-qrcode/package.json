@@ -1,0 +1,22 @@
+{
+  "family": "jquery",
+  "name": "qrcode",
+  "description": "It allow you to easily add qrcode to your webpages. It is standalone, less than 4k after minify+gzip, no image download",
+  "version": "1.0.0",
+  "homepage": "http://www.d-project.com/",
+  "keywords": [
+    "QR",
+    "jQuery",
+    "standalone"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeromeetienne/jquery-qrcode"
+  },
+  "spm": {
+    "alias": {
+      "$": "$"
+    },
+    "output": ["index.js"]
+  }
+}

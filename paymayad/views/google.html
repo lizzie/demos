@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <%- include include/title.html %>
+    <%- include include/assets.html %>
+</head>
+<body>
+<%- include include/header.html %>
+<!-- pages -->
+<section id="playground">
+    <div id="google_map" class="maps" style="visibility: visible;"></div>
+</section>
+<script src="http://maps.googleapis.com/maps/api/js?v=3&sensor=true"></script>
+
+<%- include include/assets_config.html %>
+<script>
+    seajs.use("viewer_google");
+</script>
+</body>
+</html>

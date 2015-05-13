@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<iframe id="a" src="inner.html"></iframe>
+<script>
+    var el = document.getElementById("a");
+    console.log(el.contentWindow.foo)
+</script>
+</body>
+</html>

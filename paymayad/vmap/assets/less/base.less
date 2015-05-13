@@ -1,0 +1,38 @@
+@headerBGColor: #020031;
+@headerHeight: 68px;
+@baseZIndex: 1000;
+
+.border-radius(@radius) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+.inline-block() {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
+.box-shadow(@x: 0, @y: 0, @blur: 1px, @color: #000) {
+  -webkit-box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  -ms-box-shadow: @arguments;
+  -o-box-shadow: @arguments;
+  box-shadow: @arguments;
+}
+
+
+.ks-hidden { display: none; }
+.ks-invisible { visibility: hidden; }
+
+.ks-clear:after { content: '\20'; display: block; height: 0; clear: both; }
+.ks-clear { *zoom: 1; }
+
+.ks-inline-block {
+  display: inline-block;
+  *display: inline;
+  *zoom:1;
+}
+
+

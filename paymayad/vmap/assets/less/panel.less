@@ -1,0 +1,59 @@
+.panel {
+  position: absolute;
+  top: @headerHeight;
+  left: -360px + 20;
+  width: 360px;
+  height: 100%;
+
+  z-index: @baseZIndex;
+  background: white;
+
+  border-right: 1px solid #efefef;
+  .box-shadow(-1px, 0, 7px, rgba(0,0,0,.2));
+
+  .panel-inner {
+    margin: 10px;
+    margin-bottom: @headerHeight;
+    overflow: hidden;
+  }
+  .close {
+    .inline-block();
+    height: 20px;
+    margin-top: -10px;
+    float: none;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+  }
+}
+
+/* iPad 以下 小于(不等于) 960宽度的平板电脑*/
+@media (max-width: 959px) {
+  .panel {
+    width: 260px;
+  }
+}
+/* iPad竖版 以下 小于(不等于) 960宽度的平板电脑*/
+@media (min-width: 768px) and (max-width: 959px) {
+  .panel {
+    width: 260px;
+  }
+}
+/* iPhone 以下*/
+@media (max-width: 767px) {
+  .panel {
+    width: 160px;
+  }
+}
+/* iPhone 横版及某些平板竖版 */
+@media (min-width: 480px) and (max-width: 767px) {
+  .panel {
+    width: 260px;
+  }
+}
+/* iPhone 竖版 */
+@media (max-width: 479px) {
+  .panel {
+    width: 100px;
+  }
+}

@@ -1,0 +1,13 @@
+/* TEAM */
+
+  Master: liz (F2E)
+  Contact: shengyan1985[at]gmail.com
+  Site: http://sunsetsunrising.com
+  Location: Suzhou, China
+
+/* SITE */
+
+  Last update: 2013/01/29
+  Language: Chinese
+  Doctype: HTML5
+  Standards: XHTML5, CSS3

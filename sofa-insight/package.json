@@ -1,0 +1,17 @@
+{
+    "name": "sofa-insight",
+    "version": "1.0.0",
+    "description": "。",
+    "homepage": "http://google.com",
+    "author": "乔花 <shengyan1985@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/AdaInitiative/lizzie.git"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "express": "*",
+        "seajs": "*",
+        "ejs": "*"
+    }
+}
