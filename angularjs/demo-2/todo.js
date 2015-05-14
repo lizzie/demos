@@ -1,37 +1,32 @@
-function TodoCtrl($scope) {
-    $scope.todos = [
-        {
-            text: 'learn angular',
-            done: true
-        },
-        {
-            text: 'build an angular app',
-            done: false
-        }
-    ];
+angular.module('todoApp', []).controller('TodoListController', function() {
+  var todoList = this;
+  todoList.todos = [
+      {text:'learn angular', done:true},
+      {text:'build an angular app', done:false}];
 
-    $scope.addTodo = function() {
-        $scope.todos.push({
-            text: $scope.todoText,
-            done: false
-        });
-        $scope.todoText = '';
-    };
+  todoList.addTodo = function() {
+    todoList.todos.push({
+      text: todoList.todoText,
+      done: false
+    });
+    todoList.todoText = '';
+  };
 
-    $scope.remaining = function() {
-        var count = 0;
-        angular.forEach($scope.todos, function(todo) {
-            count += todo.done ? 0 : 1;
-        });
-        return count;
-    };
+  todoList.remaining = function(){
+    var count = 0;
+    angular.forEach(todoList.todos, function(todo) {
+      count += todo.done ? 0 : 1;
+    });
+    return count;
+  };
+  todoList.archive = function() {
+    var oldTodos = todoList.todos;
 
-    $scope.archive = function() {
-        var oldTodos = $scope.todos;
+    todoList.todos = [];
+    angular.forEach(oldTodos, function(todo) {
+      if(!todo.done) todoList.todos.push(todo);
+    });
+  }
+});
 
-        $scope.todos = [];
-        angular.forEach(oldTodos, function(todo) {
-            if (!todo.done) $scope.todos.push(todo);
-        });
-    }
-}
+
