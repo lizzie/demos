@@ -5,7 +5,8 @@ var request = require('request'),
   path = require('path'),
   commander = require('commander'),
   notifier = require('node-notifier'),
-  colors = require('colors');
+  colors = require('colors'),
+  spawn = require('child_process').spawn;
 
 colors.setTheme({
   silly: 'rainbow',
@@ -32,12 +33,10 @@ function _notify(price) {
     sound: true,
     wait: true
   });
-  notifier.on('click', function(notifierObject, options) {
-    _show();
-  });
+  _show();
 }
 
-function _fetch() {
+function _fetch(callback) {
   if (fs.existsSync(data_path)) {
     original_price_date_list = require(data_path);
   } else {
@@ -84,6 +83,7 @@ function _fetch() {
         });
 
         console.log(colors.info('data saved.'));
+        callback && callback();
       } else {
         console.log(colors.warn('no data find.'));
       }
@@ -114,10 +114,18 @@ commander.version('0.0.1')
   .option('-f, --fetch', 'fetch data')
   .option('-s, --show', 'show trend of gold price')
   .option('-t, --test', 'just for testing')
+  .option('-c, --commit', 'git commit && git push')
   .parse(process.argv);
 
 if (commander.fetch) {
-  _fetch();
+  _fetch(function() {
+    if(commander.commit) {
+      var ci = spawn('git', ['commit -a -m', 'other: update gold price data']);
+      ci.on('close', function (code) {
+        spawn('git', ['push']);
+      });
+    }
+  });
 }
 
 if (commander.show) {
