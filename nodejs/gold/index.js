@@ -33,7 +33,6 @@ function _notify(price) {
     sound: true,
     wait: true
   });
-  _show();
 }
 
 function _fetch(callback) {
@@ -119,6 +118,7 @@ commander.version('0.0.1')
 
 if (commander.fetch) {
   _fetch(function() {
+    _show();
     if(commander.commit) {
       var ci = spawn('git', ['commit -a -m', 'other: update gold price data']);
       ci.on('close', function (code) {
