@@ -120,7 +120,7 @@ if (commander.fetch) {
   _fetch(function() {
     _show();
     if(commander.commit) {
-      var ci = spawn('git', ['commit -a -m', 'other: update gold price data']);
+      var ci = spawn('git', ['commit', '-am', 'other: update gold price data']);
       ci.on('close', function (code) {
         spawn('git', ['push']);
       });
