@@ -1,0 +1,15 @@
+{
+  "name": "error-code-transfer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Liz",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.1.0",
+    "commander": "^2.8.1",
+    "iconv-lite": "^0.4.8",
+    "sync-request": "^2.0.1"
+  }
+}
