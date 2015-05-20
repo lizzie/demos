@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "show": "node --harmony index.js"
+    "fetch": "node index.js -f",
+    "show": "node index.js -s"
   },
   "author": "Liz",
   "license": "MIT",

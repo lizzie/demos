@@ -21,7 +21,7 @@ colors.setTheme({
   error: 'red'
 });
 
-var data_path = './data.json',
+var data_path = path.join(__dirname, 'data.json'),
   original_price_date_list = {},
   DATA_REG = /var Data=(\[.*]);/g;
 
@@ -120,7 +120,7 @@ if (commander.fetch) {
   _fetch(function() {
     _show();
     if(commander.commit) {
-      var ci = spawn('git', ['commit', '-am', 'other: update gold price data']);
+      var ci = spawn('git', ['commit', '-am', '[other] update gold price data']);
       ci.on('close', function (code) {
         spawn('git', ['push']);
       });
