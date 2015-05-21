@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "step-1": "node index.js -o",
+    "step-2": "node index.js -f"
+  },
   "author": "Liz",
   "license": "MIT",
   "dependencies": {

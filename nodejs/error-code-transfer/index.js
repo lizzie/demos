@@ -24,53 +24,68 @@ colors.setTheme({
 var original_data_path = path.join(__dirname, 'data.json'),
   error_list_path = path.join(__dirname, 'error_list.json'),
   target_path = path.join(__dirname, 'target.json'),
+  ignore_list_path = path.join(__dirname, 'ignore_list.json'),
+
   TITLE_REG = /<h3 class="ui-tipbox-title">(.*?)<\/h3>/,
   DESCRIPTION_REG = /<p class="ui-tipbox-explain">((?:.|\s)*?)<\/p>/m,
-  IGNORE_LIST = [
-    'SECURITY_CHECK_FAIL',
-    'ICC_APPLY_FAIL',
-    'DEPOSIT',
-    'ICC_PAY_PENDING',
-    'DISCOUNT_APPLY_FAILED',
-    'CARTOON_NEED_MOBILE',
-    'CHANNEL_ROUTE_FAILED',
-    '[H]',
-    '[E]'
-  ];
+
+  ignore_list = require(ignore_list_path),
+  new_ignore_list = [];
+
+function _write(file_path, json_obj) {
+  var fileStore = fs.createWriteStream(file_path);
+
+  fileStore.on('open', function() {
+    fileStore.write(JSON.stringify(json_obj, null, 2));
+    fileStore.end();
+  });
+}
+
+function _write_ignore_list() {
+  var has_new = false;
+  ignore_list.push('===============');
+  new_ignore_list.forEach(function(value) {
+    if (!_in_ignore_list(value, true)) {
+      ignore_list.push(value);
+      has_new = true;
+    }
+  });
+  if(!has_new) {
+    ignore_list = ignore_list.slice(0, ignore_list.length-1);
+  }
+  _write(ignore_list_path, ignore_list);
+}
+
+function _in_ignore_list(target, hard) {
+  var result = ignore_list.filter(function(val, index, arr) {
+    return hard ? target === val : target.indexOf(val) !== -1;
+  });
+  return !!result.length;
+}
 
 function _original() {
-  if (fs.existsSync(original_data_path)) {
-    var original_error_list = require(original_data_path)['data'][0],
-      error_list = {};
+  if (!fs.existsSync(original_data_path)) return;
 
-    Object.keys(original_error_list).forEach(function(key) {
-      Object.keys(original_error_list[key]).forEach(function(ke) {
-        original_error_list[key][ke].forEach(function(value) {
+  var original_error_list = require(original_data_path)['data'][0],
+    error_list = {};
 
-          var need_ignore = IGNORE_LIST.filter(function(val, index, arr) {
-            return value['key'][0].indexOf(val) !== -1;
-          });
-
-          if (!need_ignore.length) {
-            error_list[value['key'][0]] = 1;
-          } else {
-            console.log(colors.prompt('igore: '), colors.debug(value['key'][0]))
-          }
-        });
+  Object.keys(original_error_list).forEach(function(key) {
+    Object.keys(original_error_list[key]).forEach(function(ke) {
+      original_error_list[key][ke].forEach(function(value) {
+        if (!_in_ignore_list(value['key'][0])) {
+          error_list[value['key'][0]] = 1;
+        } else {
+          console.log(colors.prompt('ignore: '), colors.debug(value['key'][0]));
+          new_ignore_list.push(value['key'][0]);
+        }
       });
     });
+  });
 
-    error_list = Object.keys(error_list);
+  _write(error_list_path, Object.keys(error_list));
+  _write_ignore_list();
 
-    var fileStore = fs.createWriteStream(error_list_path);
-
-    fileStore.on('open', function() {
-      fileStore.write(JSON.stringify(error_list));
-      fileStore.end();
-    });
-
-    console.log(colors.info('see error_list.json\n'));
-  }
+  console.log(colors.info('see error_list.json\n'));
 }
 
 function _fetch() {
@@ -87,16 +102,14 @@ function _fetch() {
     });
   }
 
-  var error_list = require(error_list_path);
+  var error_list = require(error_list_path),
+    result_list = [];
 
   error_list.forEach(function(error_str) {
-    error_str = error_str.split('@');
-    var error_code = error_str[0],
-      sub_error_code = error_str[1],
-      error_title,
+    var error_title,
       error_description,
-      res = request('GET', ['http://cashier.stable.alipay.net/home/error.htm?errorCode=', error_code,
-        '&subErrorCode=', sub_error_code, '&orderId=040800bab446ffd636305cer.t148861'].join('')),
+      res = request('GET', ['http://cashier.stable.alipay.net/home/error.htm?errorCode=', error_str.split('@')[0],
+        '&subErrorCode=', error_str.split('@')[1] || '', '&orderId=040800bab446ffd636305cer.t148861'].join('')),
       html_str = iconv.decode(res.getBody(), 'GBK');
 
     error_title = html_str.match(TITLE_REG) || '抱歉，无法完成付款';
@@ -110,19 +123,22 @@ function _fetch() {
     }
 
     // 描述中不包含 null && 去重
-    if (error_description.indexOf('null') === -1 && !target_error_obj[error_str.join('@')]) {
-      console.log(['', 'CASHIER', error_str.join('@'), '', 'PAY_ORDER', '', '', '', '', 'text',
-        colors.debug(error_title), 'html', colors.verbose(error_description), '', '', '', ''].join(','));
+    console.log(colors.info(error_str));
+    if (error_description.indexOf('null') === -1 && !target_error_obj[error_str]) {
+      result_list.push(['', 'CASHIER', error_str, '', 'PAY_ORDER', '', '', '', '', 'text',
+        colors.debug(error_title), 'html', colors.verbose(error_description || ' '), '', '', '', ''].join(','));
+    } else if (error_description.indexOf('null') >= 0) {
+      new_ignore_list.push(error_str);
     }
 
-    target_error_obj[error_str.join('@')] = [error_title, error_description];
-    var fileStore = fs.createWriteStream(target_path);
-
-    fileStore.on('open', function() {
-      fileStore.write(JSON.stringify(target_error_obj));
-      fileStore.end();
-    });
+    target_error_obj[error_str] = [error_title, error_description];
   });
+
+  _write(target_path, target_error_obj);
+  _write_ignore_list();
+
+  console.log(colors.info("==================================="));
+  console.log(result_list.join('\n'));
 }
 
 commander.version('0.0.1')
