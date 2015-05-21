@@ -121,7 +121,7 @@ if (commander.fetch) {
     _show();
     if(commander.commit) {
       process.chdir(__dirname);
-      var ci = spawn('git', ['commit', '-am', '[other] update gold price data']);
+      var ci = spawn('git', ['commit', '-am', '[Other] update gold price data']);
       ci.on('close', function (code) {
         spawn('git', ['push']);
       });
