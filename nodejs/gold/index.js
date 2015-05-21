@@ -77,7 +77,7 @@ function _fetch(callback) {
         var fileStore = fs.createWriteStream(data_path);
 
         fileStore.on('open', function() {
-          fileStore.write(JSON.stringify(original_price_date_list));
+          fileStore.write(JSON.stringify(original_price_date_list, null, 2));
           fileStore.end();
         });
 
