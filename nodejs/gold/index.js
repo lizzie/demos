@@ -120,6 +120,7 @@ if (commander.fetch) {
   _fetch(function() {
     _show();
     if(commander.commit) {
+      process.chdir(__dirname);
       var ci = spawn('git', ['commit', '-am', '[other] update gold price data']);
       ci.on('close', function (code) {
         spawn('git', ['push']);
