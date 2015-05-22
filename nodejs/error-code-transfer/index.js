@@ -5,7 +5,8 @@ var request = require('sync-request'),
   path = require('path'),
   commander = require('commander'),
   colors = require('colors'),
-  iconv = require('iconv-lite');
+  iconv = require('iconv-lite'),
+  properties = require('properties');
 
 colors.setTheme({
   silly: 'rainbow',
@@ -25,6 +26,7 @@ var original_data_path = path.join(__dirname, 'data.json'),
   error_list_path = path.join(__dirname, 'error_list.json'),
   target_path = path.join(__dirname, 'target.json'),
   ignore_list_path = path.join(__dirname, 'ignore_list.json'),
+  properties_path = path.join(__dirname, 'data.properties'),
 
   TITLE_REG = /<h3 class="ui-tipbox-title">(.*?)<\/h3>/,
   DESCRIPTION_REG = /<p class="ui-tipbox-explain">((?:.|\s)*?)<\/p>/m,
@@ -50,8 +52,8 @@ function _write_ignore_list() {
       has_new = true;
     }
   });
-  if(!has_new) {
-    ignore_list = ignore_list.slice(0, ignore_list.length-1);
+  if (!has_new) {
+    ignore_list = ignore_list.slice(0, ignore_list.length - 1);
   }
   _write(ignore_list_path, ignore_list);
 }
@@ -141,10 +143,22 @@ function _fetch() {
   console.log(result_list.join('\n'));
 }
 
+function _properties() {
+  properties.parse(properties_path, {path: true}, function(error, obj) {
+    if (error) return console.error(error);
+
+    Object.keys(obj).forEach(function(key, val) {
+      console.log(['', 'CASHIER', 'ICC_APPLY_FAIL@' + key, '', 'PAY_ORDER', '', '', '', '', 'text',
+        colors.debug(obj[key].trim()), 'html', ' ', '', '', '', ''].join(','))
+    });
+  });
+}
+
 commander.version('0.0.1')
   .usage('[options]')
   .option('-o, --original', 'process original data')
   .option('-f, --fetch', 'fetch title & description')
+  .option('-p, --properties', 'generate from properties file')
   .option('-g, --generate', 'generate csv file')
   .parse(process.argv);
 
@@ -154,4 +168,8 @@ if (commander.original) {
 
 if (commander.fetch) {
   _fetch();
+}
+
+if (commander.properties) {
+  _properties();
 }
