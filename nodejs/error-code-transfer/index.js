@@ -29,8 +29,8 @@ var original_data_path = path.join(__dirname, 'data.json'),
   ignore_list_path = path.join(__dirname, 'ignore_list.json'),
   properties_path = path.join(__dirname, 'data.properties'),
 
-  TITLE_REG = /<h3 class="ui-tipbox-title">(.*?)<\/h3>/,
-  DESCRIPTION_REG = /<p class="ui-tipbox-explain">((?:.|\s)*?)<\/p>/m,
+  TITLE_REG = /<h3 class='ui-tipbox-title'>(.*?)<\/h3>/,
+  DESCRIPTION_REG = /<p class='ui-tipbox-explain'>((?:.|\s)*?)<\/p>/m,
 
   ignore_list = require(ignore_list_path),
   new_ignore_list = [];
@@ -140,7 +140,7 @@ function _fetch() {
   _write(target_path, target_error_obj);
   _write_ignore_list();
 
-  console.log(colors.info("==================================="));
+  console.log(colors.info('==================================='));
   console.log(result_list.join('\n'));
 }
 
