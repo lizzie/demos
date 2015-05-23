@@ -6,7 +6,8 @@ var request = require('sync-request'),
   commander = require('commander'),
   colors = require('colors'),
   iconv = require('iconv-lite'),
-  properties = require('properties');
+  properties = require('properties'),
+  config = require('./config.json');
 
 colors.setTheme({
   silly: 'rainbow',
@@ -110,8 +111,8 @@ function _fetch() {
   error_list.forEach(function(error_str) {
     var error_title,
       error_description,
-      res = request('GET', ['http://cashier.stable.alipay.net/home/error.htm?errorCode=', error_str.split('@')[0],
-        '&subErrorCode=', error_str.split('@')[1] || '', '&orderId=040800bab446ffd636305cer.t148861'].join('')),
+      res = request('GET', [config['url-prefix'], error_str.split('@')[0],
+        '&subErrorCode=', error_str.split('@')[1] || '', config['order-id']].join('')),
       html_str = iconv.decode(res.getBody(), 'GBK');
 
     error_title = html_str.match(TITLE_REG) || '抱歉，无法完成付款';
@@ -159,7 +160,6 @@ commander.version('0.0.1')
   .option('-o, --original', 'process original data')
   .option('-f, --fetch', 'fetch title & description')
   .option('-p, --properties', 'generate from properties file')
-  .option('-g, --generate', 'generate csv file')
   .parse(process.argv);
 
 if (commander.original) {
