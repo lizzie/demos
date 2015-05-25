@@ -2,7 +2,7 @@
 
 ```
 touch data.json
-// copy http://xflush.alipay.com/u_5/universalQuery to data.json
+// copy xflush.../u_5/universalQuery to data.json
 touch ignore_list.json
 // type a ignore array to ignore_list.json
 touch config.json
