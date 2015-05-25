@@ -29,8 +29,8 @@ var original_data_path = path.join(__dirname, 'data.json'),
   ignore_list_path = path.join(__dirname, 'ignore_list.json'),
   properties_path = path.join(__dirname, 'data.properties'),
 
-  TITLE_REG = /<h3 class='ui-tipbox-title'>(.*?)<\/h3>/,
-  DESCRIPTION_REG = /<p class='ui-tipbox-explain'>((?:.|\s)*?)<\/p>/m,
+  TITLE_REG = /<h3 class="ui-tipbox-title">(.*?)<\/h3>/,
+  DESCRIPTION_REG = /<p class="ui-tipbox-explain">((?:.|\s)*?)<\/p>/m,
 
   ignore_list = require(ignore_list_path),
   new_ignore_list = [];
@@ -70,7 +70,8 @@ function _original() {
   if (!fs.existsSync(original_data_path)) return;
 
   var original_error_list = require(original_data_path)['data'][0],
-    error_list = {};
+    error_list = {},
+    ae_list = {};
 
   Object.keys(original_error_list).forEach(function(key) {
     Object.keys(original_error_list[key]).forEach(function(ke) {
@@ -78,8 +79,12 @@ function _original() {
         if (!_in_ignore_list(value['key'][0])) {
           error_list[value['key'][0]] = 1;
         } else {
-          console.log(colors.prompt('ignore: '), colors.debug(value['key'][0]));
-          new_ignore_list.push(value['key'][0]);
+          if(value['key'][0].indexOf('AE') === -1) {
+            console.log(colors.prompt('ignore: '), colors.debug(value['key'][0]));
+            new_ignore_list.push(value['key'][0]);
+          } else {
+            ae_list[value['key'][0]] = '';
+          }
         }
       });
     });
@@ -87,6 +92,9 @@ function _original() {
 
   _write(error_list_path, Object.keys(error_list));
   _write_ignore_list();
+
+  console.log(colors.info('==================================='));
+  console.log(Object.keys(ae_list).join('\n'));
 
   console.log(colors.info('see error_list.json\n'));
 }
@@ -115,12 +123,12 @@ function _fetch() {
         '&subErrorCode=', error_str.split('@')[1] || '', config['order-id']].join('')),
       html_str = iconv.decode(res.getBody(), 'GBK');
 
-    error_title = html_str.match(TITLE_REG) || '抱歉，无法完成付款';
+    error_title = html_str.match(TITLE_REG) || ['', '抱歉，无法完成付款'];
     if (error_title) {
       error_title = error_title[1].trim();
     }
 
-    error_description = html_str.match(DESCRIPTION_REG) || '';
+    error_description = html_str.match(DESCRIPTION_REG) || ['', ''];
     if (error_description) {
       error_description = error_description[1].trim();
     }
