@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-var request = require('sync-request'),
+var srequest = require('sync-request'),
+  request = require('request'),
   fs = require('fs'),
   path = require('path'),
   commander = require('commander'),
@@ -66,6 +67,25 @@ function _in_ignore_list(target, hard) {
   return !!result.length;
 }
 
+function _crawl() {
+  var body = config['crawl-body'];
+  body['start'] = Date.now();
+  body['end'] = Date.now();
+  console.log(body['start'], body['end']);
+  try {
+    request({
+      url: config['crawl-url'],
+      method: 'POST',
+      json: true,
+      headers: config['crawl-headers'],
+      body: body
+    }).pipe(fs.createWriteStream(original_data_path));
+
+  } catch (e) {
+    console.log('crawl error ', e)
+  }
+}
+
 function _original() {
   if (!fs.existsSync(original_data_path)) return;
 
@@ -79,8 +99,7 @@ function _original() {
         if (!_in_ignore_list(value['key'][0])) {
           error_list[value['key'][0]] = 1;
         } else {
-          if(value['key'][0].indexOf('AE') === -1) {
-            console.log(colors.prompt('ignore: '), colors.debug(value['key'][0]));
+          if (value['key'][0].indexOf('AE') === -1) {
             new_ignore_list.push(value['key'][0]);
           } else {
             ae_list[value['key'][0]] = '';
@@ -95,8 +114,6 @@ function _original() {
 
   console.log(colors.info('==================================='));
   console.log(Object.keys(ae_list).join('\n'));
-
-  console.log(colors.info('see error_list.json\n'));
 }
 
 function _fetch() {
@@ -119,7 +136,7 @@ function _fetch() {
   error_list.forEach(function(error_str) {
     var error_title,
       error_description,
-      res = request('GET', [config['url-prefix'], error_str.split('@')[0],
+      res = srequest('GET', [config['url-prefix'], error_str.split('@')[0],
         '&subErrorCode=', error_str.split('@')[1] || '', config['order-id']].join('')),
       html_str = iconv.decode(res.getBody(), 'GBK');
 
@@ -154,7 +171,7 @@ function _fetch() {
 
 function _properties() {
   properties.parse(properties_path, {path: true}, function(error, obj) {
-    if (error) return console.error(error);
+    if (error) return;
 
     Object.keys(obj).forEach(function(key, val) {
       console.log(['', 'CASHIER', 'ICC_APPLY_FAIL@' + key, '', 'PAY_ORDER', '', '', '', '', 'text',
@@ -165,10 +182,15 @@ function _properties() {
 
 commander.version('0.0.1')
   .usage('[options]')
+  .option('-c, --crawl', 'crawl')
   .option('-o, --original', 'process original data')
   .option('-f, --fetch', 'fetch title & description')
   .option('-p, --properties', 'generate from properties file')
   .parse(process.argv);
+
+if (commander.crawl) {
+  _crawl();
+}
 
 if (commander.original) {
   _original();

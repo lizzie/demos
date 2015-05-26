@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "step-0": "node index.js -c",
     "step-1": "node index.js -o",
     "step-2": "node index.js -f",
     "step-3": "node index.js -p"
@@ -15,6 +16,7 @@
     "commander": "^2.8.1",
     "iconv-lite": "^0.4.8",
     "properties": "^1.2.1",
+    "request": "^2.55.0",
     "sync-request": "^2.0.1"
   }
 }
