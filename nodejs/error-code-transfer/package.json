@@ -15,8 +15,9 @@
     "colors": "^1.1.0",
     "commander": "^2.8.1",
     "iconv-lite": "^0.4.8",
+    "promise": "^7.0.1",
     "properties": "^1.2.1",
-    "request": "^2.55.0",
-    "sync-request": "^2.0.1"
+    "q": "^1.4.1",
+    "request": "^2.55.0"
   }
 }

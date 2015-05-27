@@ -1,12 +1,13 @@
 #!/Users/shengyan/.nvm/versions/io.js/v2.0.2/bin/node
 
-var srequest = require('sync-request'),
+var Promise = require('promise'),
   request = require('request'),
   fs = require('fs'),
   path = require('path'),
   commander = require('commander'),
   colors = require('colors'),
   iconv = require('iconv-lite'),
+  Q = require('q'),
   properties = require('properties'),
   config = require('./config.json');
 
@@ -71,7 +72,7 @@ function _in_ignore_list(target, hard) {
 function _crawl() {
   var body = config['crawl-body'],
     now = new Date(),
-    last_minutes = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), Math.max(now.getMinutes() - 5, 0) , 0);
+    last_minutes = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), Math.max(now.getMinutes() - 5, 0), 0);
   body[0]['condition']['start'] = last_minutes.getTime();
   body[0]['condition']['end'] = last_minutes.getTime();
   console.log(body[0]['condition']['start'], body[0]['condition']['end']);
@@ -96,7 +97,7 @@ function _original() {
     ae_list = require(ae_list_path),
     error_list = {};
 
-  if(!original_error_list['success']) return;
+  if (!original_error_list['success']) return;
   original_error_list = original_error_list['data'][0];
 
   Object.keys(original_error_list).forEach(function(key) {
@@ -134,42 +135,48 @@ function _fetch() {
     });
   }
 
-  var error_list = require(error_list_path),
-    result_list = [];
+  Q.all(require(error_list_path).map(function(error_str) {
+    return new Promise(function(resolve, reject) {
+      request.get([config['url-prefix'], error_str.split('@')[0],
+        '&subErrorCode=', error_str.split('@')[1] || '', config['order-id']].join(''))
+        .pipe(iconv.decodeStream('GBK')).collect(function(err, html_str) {
+          if (err) {
+            reject(err);
+          } else {
+            var error_title,
+              error_description,
+              output = '';
 
-  error_list.forEach(function(error_str) {
-    var error_title,
-      error_description,
-      res = srequest('GET', [config['url-prefix'], error_str.split('@')[0],
-        '&subErrorCode=', error_str.split('@')[1] || '', config['order-id']].join('')),
-      html_str = iconv.decode(res.getBody(), 'GBK');
+            error_title = html_str.match(TITLE_REG) || ['', '抱歉，无法完成付款'];
+            if (error_title) {
+              error_title = error_title[1].trim();
+            }
 
-    error_title = html_str.match(TITLE_REG) || ['', '抱歉，无法完成付款'];
-    if (error_title) {
-      error_title = error_title[1].trim();
-    }
+            error_description = html_str.match(DESCRIPTION_REG) || ['', ''];
+            if (error_description) {
+              error_description = error_description[1].trim();
+            }
 
-    error_description = html_str.match(DESCRIPTION_REG) || ['', ''];
-    if (error_description) {
-      error_description = error_description[1].trim();
-    }
+            // 描述中不包含 null && 去重
+            if (error_description.indexOf('null') === -1 && !target_error_obj[error_str]) {
+              output = ['', 'CASHIER', error_str, '', 'PAY_ORDER', '', '', '', '', 'text',
+                colors.debug(error_title), 'html', colors.verbose(error_description || ' '), '', '', '', ''].join(',');
+            } else if (error_description.indexOf('null') >= 0) {
+              new_ignore_list.push(error_str);
+            }
 
-    // 描述中不包含 null && 去重
-    if (error_description.indexOf('null') === -1 && !target_error_obj[error_str]) {
-      result_list.push(['', 'CASHIER', error_str, '', 'PAY_ORDER', '', '', '', '', 'text',
-        colors.debug(error_title), 'html', colors.verbose(error_description || ' '), '', '', '', ''].join(','));
-    } else if (error_description.indexOf('null') >= 0) {
-      new_ignore_list.push(error_str);
-    }
+            target_error_obj[error_str] = [error_title, error_description];
+            resolve(output);
+          }
+        });
+    })
+  })).done(function(results) {
+    _write(target_path, target_error_obj);
+    _write_ignore_list();
 
-    target_error_obj[error_str] = [error_title, error_description];
+    console.log(colors.info('==================================='));
+    console.log(results.join('\n'));
   });
-
-  _write(target_path, target_error_obj);
-  _write_ignore_list();
-
-  console.log(colors.info('==================================='));
-  console.log(result_list.join('\n'));
 }
 
 function _properties() {
