@@ -93,9 +93,8 @@ function _original() {
   if (!fs.existsSync(original_data_path)) return;
 
   var original_error_list = require(original_data_path),
-    original_ae_list = require(ae_list_path),
-    error_list = {},
-    ae_list = {};
+    ae_list = require(ae_list_path),
+    error_list = {};
 
   if(!original_error_list['success']) return;
   original_error_list = original_error_list['data'][0];
@@ -108,15 +107,15 @@ function _original() {
         } else {
           if (value['key'][0].indexOf('AE') === -1) {
             new_ignore_list.push(value['key'][0]);
-          } else if (value['key'][0].indexOf('@') === -1 && original_ae_list.indexOf(value['key'][0]) === -1) {
-            ae_list[value['key'][0]] = '';
+          } else if (value['key'][0].indexOf('@') === -1 && ae_list.indexOf(value['key'][0]) === -1) {
+            ae_list.push(value['key'][0]);
           }
         }
       });
     });
   });
 
-  _write(ae_list_path, Object.keys(ae_list));
+  _write(ae_list_path, ae_list);
   _write(error_list_path, Object.keys(error_list));
   _write_ignore_list();
 }
