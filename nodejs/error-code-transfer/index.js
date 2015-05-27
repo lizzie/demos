@@ -68,10 +68,12 @@ function _in_ignore_list(target, hard) {
 }
 
 function _crawl() {
-  var body = config['crawl-body'];
-  body['start'] = Date.now();
-  body['end'] = Date.now();
-  console.log(body['start'], body['end']);
+  var body = config['crawl-body'],
+    now = new Date(),
+    last_minutes = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes()-2, 0);
+  body[0]['condition']['start'] = last_minutes.getTime();
+  body[0]['condition']['end'] = last_minutes.getTime();
+  console.log(body[0]['condition']['start'], body[0]['condition']['end']);
   try {
     request({
       url: config['crawl-url'],
@@ -151,7 +153,6 @@ function _fetch() {
     }
 
     // 描述中不包含 null && 去重
-    console.log(colors.info(error_str));
     if (error_description.indexOf('null') === -1 && !target_error_obj[error_str]) {
       result_list.push(['', 'CASHIER', error_str, '', 'PAY_ORDER', '', '', '', '', 'text',
         colors.debug(error_title), 'html', colors.verbose(error_description || ' '), '', '', '', ''].join(','));
@@ -203,3 +204,4 @@ if (commander.fetch) {
 if (commander.properties) {
   _properties();
 }
+
