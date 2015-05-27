@@ -91,9 +91,12 @@ function _crawl() {
 function _original() {
   if (!fs.existsSync(original_data_path)) return;
 
-  var original_error_list = require(original_data_path)['data'][0],
+  var original_error_list = require(original_data_path),
     error_list = {},
     ae_list = {};
+
+  if(!original_error_list['success']) return;
+  original_error_list = original_error_list['data'][0];
 
   Object.keys(original_error_list).forEach(function(key) {
     Object.keys(original_error_list[key]).forEach(function(ke) {
