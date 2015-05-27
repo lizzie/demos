@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/Users/shengyan/.nvm/versions/io.js/v2.0.2/bin/node
 
 var srequest = require('sync-request'),
   request = require('request'),
