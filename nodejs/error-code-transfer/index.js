@@ -70,7 +70,7 @@ function _in_ignore_list(target, hard) {
 function _crawl() {
   var body = config['crawl-body'],
     now = new Date(),
-    last_minutes = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes()-2, 0);
+    last_minutes = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() - 2, 0);
   body[0]['condition']['start'] = last_minutes.getTime();
   body[0]['condition']['end'] = last_minutes.getTime();
   console.log(body[0]['condition']['start'], body[0]['condition']['end']);
@@ -103,7 +103,7 @@ function _original() {
         } else {
           if (value['key'][0].indexOf('AE') === -1) {
             new_ignore_list.push(value['key'][0]);
-          } else {
+          } else if (value['key'][0].indexOf('@') === -1) {
             ae_list[value['key'][0]] = '';
           }
         }
