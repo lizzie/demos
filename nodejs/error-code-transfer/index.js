@@ -169,7 +169,7 @@ function _fetch() {
             resolve(output);
           }
         });
-    })
+    });
   })).done(function(results) {
     _write(target_path, target_error_obj);
     _write_ignore_list();
