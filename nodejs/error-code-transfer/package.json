@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "step-0": "node index.js -c",
-    "step-1": "node index.js -o",
-    "step-2": "node index.js -f",
-    "step-3": "node index.js -p"
+    "step-0": "./index.js -c",
+    "step-1": "./index.js -o",
+    "step-2": "./index.js -f",
+    "step-3": "./index.js -p"
   },
   "author": "Liz",
   "license": "MIT",
