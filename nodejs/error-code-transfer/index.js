@@ -157,6 +157,7 @@ function _fetch() {
               error_description = error_description[1].trim();
             }
 
+            console.log(error_str);
             // 描述中不包含 null && 去重
             if (error_description.indexOf('null') === -1 && !target_error_obj[error_str]) {
               output = ['', 'CASHIER', error_str, '', 'PAY_ORDER', '', '', '', '', 'text',
