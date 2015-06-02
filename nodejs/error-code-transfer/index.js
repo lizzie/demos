@@ -8,6 +8,7 @@ var Promise = require('promise'),
   colors = require('colors'),
   iconv = require('iconv-lite'),
   Q = require('q'),
+  csv = require('csv'),
   properties = require('properties'),
   config = require('./config.json');
 
@@ -31,6 +32,7 @@ var original_data_path = path.join(__dirname, 'data.json'),
   target_path = path.join(__dirname, 'target.json'),
   ignore_list_path = path.join(__dirname, 'ignore_list.json'),
   properties_path = path.join(__dirname, 'data.properties'),
+  all_csv_path = path.join(__dirname, 'all.csv'),
 
   TITLE_REG = /<h3 class="ui-tipbox-title">(.*?)<\/h3>/,
   DESCRIPTION_REG = /<p class="ui-tipbox-explain">((?:.|\s)*?)<\/p>/m,
@@ -191,12 +193,40 @@ function _properties() {
   });
 }
 
+function _find_csv_items(search_data, all_data) {
+  search_data.forEach(function(search_item) {
+    var match_item = null;
+
+    all_data.forEach(function(all_items) {
+      if(search_item[0] === all_items[2]) {
+        match_item = all_items;
+        return;
+      }
+    });
+
+    if(match_item) {
+      console.log([colors.verbose(search_item[0]), colors.grey(search_item[1]), colors.debug(match_item[4])].join(','));
+    } else {
+      console.log([colors.verbose(search_item[0]), colors.grey(search_item[1]), ''].join(','));
+    }
+  });
+}
+
+function _find_csv() {
+  fs.createReadStream(path.join(__dirname, 'search.csv')).pipe(csv.parse(function(err, search_data) {
+    fs.createReadStream(path.join(__dirname, 'all.csv')).pipe(csv.parse(function(err, all_data) {
+      _find_csv_items(search_data, all_data);
+    }));
+  }));
+}
+
 commander.version('0.0.1')
   .usage('[options]')
   .option('-c, --crawl', 'crawl')
   .option('-o, --original', 'process original data')
   .option('-f, --fetch', 'fetch title & description')
   .option('-p, --properties', 'generate from properties file')
+  .option('-s, --csv', 'csv')
   .parse(process.argv);
 
 if (commander.crawl) {
@@ -213,5 +243,9 @@ if (commander.fetch) {
 
 if (commander.properties) {
   _properties();
+}
+
+if (commander.csv) {
+  _find_csv();
 }
 
