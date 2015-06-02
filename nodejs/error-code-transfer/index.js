@@ -205,9 +205,9 @@ function _find_csv_items(search_data, all_data) {
     });
 
     if(match_item) {
-      console.log([colors.verbose(search_item[0]), colors.grey(search_item[1]), colors.debug(match_item[4])].join(','));
+      console.log([colors.verbose('SYSTEM_EXCEPTION' + '@' + search_item[0]), colors.grey(search_item[1]), colors.debug(match_item[4])].join(','));
     } else {
-      console.log([colors.verbose(search_item[0]), colors.grey(search_item[1]), ''].join(','));
+      console.log([colors.verbose('SYSTEM_EXCEPTION' + '@' + search_item[0]), colors.grey(search_item[1]), ''].join(','));
     }
   });
 }
