@@ -53,19 +53,19 @@ function _write_ignore_list() {
   var has_new = false;
   ignore_list.push('===============');
   new_ignore_list.forEach(function(value) {
-    if (!_in_ignore_list(value, true)) {
+    if(!_in_ignore_list(value, true)) {
       ignore_list.push(value);
       has_new = true;
     }
   });
-  if (!has_new) {
+  if(!has_new) {
     ignore_list = ignore_list.slice(0, ignore_list.length - 1);
   }
   _write(ignore_list_path, ignore_list);
 }
 
 function _in_ignore_list(target, hard) {
-  var result = ignore_list.filter(function(val, index, arr) {
+  var result = ignore_list.filter(function(val) {
     return hard ? target === val : target.indexOf(val) !== -1;
   });
   return !!result.length;
@@ -93,24 +93,24 @@ function _crawl() {
 }
 
 function _original() {
-  if (!fs.existsSync(original_data_path)) return;
+  if(!fs.existsSync(original_data_path)) return;
 
   var original_error_list = require(original_data_path),
     ae_list = require(ae_list_path),
     error_list = {};
 
-  if (!original_error_list['success']) return;
+  if(!original_error_list['success']) return;
   original_error_list = original_error_list['data'][0];
 
   Object.keys(original_error_list).forEach(function(key) {
     Object.keys(original_error_list[key]).forEach(function(ke) {
       original_error_list[key][ke].forEach(function(value) {
-        if (!_in_ignore_list(value['key'][0])) {
+        if(!_in_ignore_list(value['key'][0])) {
           error_list[value['key'][0]] = 1;
         } else {
-          if (value['key'][0].indexOf('AE') === -1) {
+          if(value['key'][0].indexOf('AE') === -1) {
             new_ignore_list.push(value['key'][0]);
-          } else if (value['key'][0].indexOf('@') === -1 && ae_list.indexOf(value['key'][0]) === -1) {
+          } else if(value['key'][0].indexOf('@') === -1 && ae_list.indexOf(value['key'][0]) === -1) {
             ae_list.push(value['key'][0]);
           }
         }
@@ -126,7 +126,7 @@ function _original() {
 function _fetch() {
   var target_error_obj = {};
 
-  if (fs.existsSync(target_path)) {
+  if(fs.existsSync(target_path)) {
     target_error_obj = require(target_path);
   } else {
     var ws = fs.createWriteStream(target_path);
@@ -142,7 +142,7 @@ function _fetch() {
       request.get([config['url-prefix'], error_str.split('@')[0],
         '&subErrorCode=', error_str.split('@')[1] || '', config['order-id']].join(''))
         .pipe(iconv.decodeStream('GBK')).collect(function(err, html_str) {
-          if (err) {
+          if(err) {
             reject(err);
           } else {
             var error_title,
@@ -150,21 +150,21 @@ function _fetch() {
               output = '';
 
             error_title = html_str.match(TITLE_REG) || ['', '抱歉，无法完成付款'];
-            if (error_title) {
+            if(error_title) {
               error_title = error_title[1].trim();
             }
 
             error_description = html_str.match(DESCRIPTION_REG) || ['', ''];
-            if (error_description) {
+            if(error_description) {
               error_description = error_description[1].trim();
             }
 
             console.log(error_str);
             // 描述中不包含 null && 去重
-            if (error_description.indexOf('null') === -1 && !target_error_obj[error_str]) {
+            if(error_description.indexOf('null') === -1 && !target_error_obj[error_str]) {
               output = ['', 'CASHIER', error_str, '', 'PAY_ORDER', '', '', '', '', 'text',
                 colors.debug(error_title), 'html', colors.verbose(error_description || ' '), '', '', '', ''].join(',');
-            } else if (error_description.indexOf('null') >= 0) {
+            } else if(error_description.indexOf('null') >= 0) {
               new_ignore_list.push(error_str);
             }
 
@@ -184,9 +184,9 @@ function _fetch() {
 
 function _properties() {
   properties.parse(properties_path, {path: true}, function(error, obj) {
-    if (error) return;
+    if(error) return;
 
-    Object.keys(obj).forEach(function(key, val) {
+    Object.keys(obj).forEach(function(key) {
       console.log(['', 'CASHIER', 'ICC_APPLY_FAIL@' + key, '', 'PAY_ORDER', '', '', '', '', 'text',
         colors.debug(obj[key].trim()), 'html', ' ', '', '', '', ''].join(','))
     });
@@ -200,7 +200,7 @@ function _find_csv_items(search_data, all_data) {
     all_data.forEach(function(all_items) {
       if(search_item[0] === all_items[2]) {
         match_item = all_items;
-        return;
+        return false;
       }
     });
 
@@ -229,23 +229,23 @@ commander.version('0.0.1')
   .option('-s, --csv', 'csv')
   .parse(process.argv);
 
-if (commander.crawl) {
+if(commander.crawl) {
   _crawl();
 }
 
-if (commander.original) {
+if(commander.original) {
   _original();
 }
 
-if (commander.fetch) {
+if(commander.fetch) {
   _fetch();
 }
 
-if (commander.properties) {
+if(commander.properties) {
   _properties();
 }
 
-if (commander.csv) {
+if(commander.csv) {
   _find_csv();
 }
 
