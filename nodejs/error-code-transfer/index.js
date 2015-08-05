@@ -161,12 +161,12 @@ function _fetch() {
 
             console.log(error_str);
             // 描述中不包含 null && 去重
-            if(error_description.indexOf('null') === -1 && !target_error_obj[error_str]) {
+            if(/*error_description.indexOf('null') === -1 && */!target_error_obj[error_str]) {
               output = ['', 'CASHIER', error_str, '', 'PAY_ORDER', '', '', '', '', 'text',
                 colors.debug(error_title), 'html', colors.verbose(error_description || ' '), '', '', '', ''].join(',');
-            } else if(error_description.indexOf('null') >= 0) {
+            }/* else if(error_description.indexOf('null') >= 0) {
               new_ignore_list.push(error_str);
-            }
+            }*/
 
             target_error_obj[error_str] = [error_title, error_description];
             resolve(output);
